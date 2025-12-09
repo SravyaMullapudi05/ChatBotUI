@@ -1,5 +1,6 @@
-<!-- Header -->
 <div class="chat-header">
+
+    <!-- LEFT SIDE -->
     <div class="header-left">
       <div class="chat-icon-wrapper">
         <mat-icon class="chat-icon">smart_toy</mat-icon>
@@ -14,30 +15,48 @@
       </div>
     </div>
   
+    <!-- RIGHT SIDE BUTTONS -->
     <div class="header-right">
-      <button mat-icon-button class="header-btn" 
-              *ngFor="let btn of headerActions"
-              [title]="btn.title"
-              (click)="btn.click()">
-        <mat-icon>{{ btn.icon }}</mat-icon>
+  
+      <!-- LANGUAGE DROPDOWN BUTTON (mat-menu trigger) -->
+      <button mat-button class="lang-btn" [matMenuTriggerFor]="langMenu">
+        <img [src]="selectedLanguage.flag" class="lang-flag">
+        <span>{{ selectedLanguage.code.toUpperCase() }}</span>
+        <mat-icon>expand_more</mat-icon>
       </button>
+  
+      <!-- MATERIAL MENU: LANGUAGES -->
+      <mat-menu #langMenu="matMenu" class="lang-menu-panel">
+        <button mat-menu-item *ngFor="let lang of languages" (click)="selectLanguage(lang)">
+          <img [src]="lang.flag">
+          <span>{{ lang.code.toUpperCase() }} — {{ lang.label }}</span>
+        </button>
+      </mat-menu>
+  
+      <!-- SETTINGS BUTTON + MENU -->
+      <button mat-icon-button [matMenuTriggerFor]="settingsMenu">
+        <mat-icon>settings</mat-icon>
+      </button>
+  
+      <mat-menu #settingsMenu="matMenu" class="settings-menu-panel">
+        <div class="settings-title">Chat Settings</div>
+  
+        <button mat-menu-item *ngFor="let opt of settingsOptions" (click)="onSelectSetting(opt)">
+          {{ opt.label }}
+        </button>
+      </mat-menu>
+  
+      <!-- MINIMIZE -->
+      <button mat-icon-button (click)="minimizeClick.emit()">
+        <mat-icon>remove</mat-icon>
+      </button>
+  
+      <!-- CLOSE -->
+      <button mat-icon-button (click)="closeClick.emit()">
+        <mat-icon>close</mat-icon>
+      </button>
+  
     </div>
   
-    <!-- language menu -->
-    <div class="language-menu" *ngIf="showLanguageMenu">
-      <div class="lang-option" *ngFor="let lang of languages" 
-           (click)="selectLanguage(lang)">
-        {{ lang.label }}
-      </div>
-    </div>
-  
-    <!-- settings menu -->
-    <div class="settings-menu" *ngIf="showSettingsMenu">
-      <div class="settings-title">Chat Settings</div>
-      <div class="settings-option" *ngFor="let item of settingsOptions"
-           (click)="item.action()">
-        {{ item.label }}
-      </div>
-    </div>
   </div>
   

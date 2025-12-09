@@ -1,92 +1,98 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ElementRef, HostListener, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
-  showmainmenu: boolean;
-  awaitingApplicationNumber: boolean;
-  subModules: any[];
-  messages: any[];
-  drawer: any;
+export class HeaderComponent {
 
-  ngOnInit(): void {
+  @ViewChild('langDropdown') langDropdown!: ElementRef;
+  @ViewChild('settingsDropdown') settingsDropdown!: ElementRef;
 
-  }
+  /* Header Buttons */
+  headerActions = [
+    { icon: 'translate', title: 'Translate' },
+    { icon: 'settings', title: 'Settings' },
+    { icon: 'remove', title: 'Minimize' },
+    { icon: 'close', title: 'Close' }
+  ];
 
-  /* HEADER MENU STATE */
+  /* Languages */
+  languages = [
+    { id: 1, code: 'en', label: 'English', flag: 'assets/flag-en.png' },
+    { id: 2, code: 'hi', label: 'हिंदी', flag: 'assets/flag-hi.png' }
+  ];
+
+  selectedLanguage = this.languages[0];
+
+  /* Settings */
+  settingsOptions = [
+    { id: 1, label: 'Clear History' },
+    { id: 2, label: 'Sound Notifications' }
+  ];
+
   showLanguageMenu = false;
   showSettingsMenu = false;
 
-  /* HEADER ACTION BUTTONS */
-  headerActions = [
-    { icon: 'translate', title: 'Translate', click: () => this.onTranslateClick() },
-    { icon: 'settings', title: 'Settings', click: () => this.onSettingsClick() },
-    { icon: 'remove', title: 'Minimize', click: () => this.onMinimizeClick() },
-    { icon: 'close', title: 'Close', click: () => this.closeChat() }
-  ];
+  /* OUTPUT EVENTS */
+  @Output() translateClick = new EventEmitter<void>();
+  @Output() settingsClick = new EventEmitter<void>();
+  @Output() minimizeClick = new EventEmitter<void>();
+  @Output() closeClick = new EventEmitter<void>();
+  @Output() languageSelected = new EventEmitter<any>();
+  @Output() settingsSelected = new EventEmitter<any>();
 
-  /* LANGUAGES */
-  languages = [
-    { id: 1, code: 'en', label: 'English' },
-    { id: 2, code: 'hi', label: 'हिंदी' }
-  ];
-
-  /* SETTINGS MENU OPTIONS */
-  settingsOptions = [
-    { id: 1, label: 'Clear History', action: () => this.onClearHistory() },
-    { id: 2, label: 'Sound Notifications', action: () => this.onToggleSound() }
-  ];
-
-  /* OUTPUT EVENT TO INFORM PARENT */
-  @Output() closeChatEvent = new EventEmitter<void>();
-
-  /* -------- HEADER METHODS ---------- */
-
-  /** Toggle language dropdown */
-  onTranslateClick() {
-    this.showLanguageMenu = !this.showLanguageMenu;
-    this.showSettingsMenu = false; // auto-hide settings
+  /* Universal header actions */
+  onHeaderButton(icon: string) {
+    if (icon === 'translate') {
+      this.showLanguageMenu = !this.showLanguageMenu;
+      this.showSettingsMenu = false;
+      this.translateClick.emit();
+    } else if (icon === 'settings') {
+      this.showSettingsMenu = !this.showSettingsMenu;
+      this.showLanguageMenu = false;
+      this.settingsClick.emit();
+    } else if (icon === 'remove') {
+      this.closeAllMenus();
+      this.minimizeClick.emit();
+    } else if (icon === 'close') {
+      this.closeAllMenus();
+      this.closeClick.emit();
+    }
   }
 
-  /** Toggle settings dropdown */
-  onSettingsClick() {
-    this.showSettingsMenu = !this.showSettingsMenu;
-    this.showLanguageMenu = false; // auto-hide languages
-  }
-
-  /** When user selects a language */
   selectLanguage(lang: any) {
-    console.log('Selected Language:', lang);
+    this.selectedLanguage = lang;
+    this.languageSelected.emit(lang);
     this.showLanguageMenu = false;
   }
 
-  /** Clear chat history */
-  onClearHistory() {
-    this.showmainmenu = true;
-    this.awaitingApplicationNumber = false;
-    this.subModules = [];
-    this.messages = [];
+  selectSetting(item: any) {
+    this.settingsSelected.emit(item);
+    this.showSettingsMenu = false;
   }
 
-  /** Toggle sound option */
-  onToggleSound() {
-    console.log("Sound toggled");
+  closeAllMenus() {
+    this.showLanguageMenu = false;
+    this.showSettingsMenu = false;
   }
 
-  /** Minimize chat window */
-  onMinimizeClick() {
-    this.drawer?.close();
+  /* CLOSE ONLY WHEN CLICK IS OUTSIDE */
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(evt: Event) {
+    const click = evt.target as HTMLElement;
+
+    // Close language dropdown if clicked outside
+    if (this.showLanguageMenu && this.langDropdown &&
+        !this.langDropdown.nativeElement.contains(click)) {
+      this.showLanguageMenu = false;
+    }
+
+    // Close settings dropdown if clicked outside
+    if (this.showSettingsMenu && this.settingsDropdown &&
+        !this.settingsDropdown.nativeElement.contains(click)) {
+      this.showSettingsMenu = false;
+    }
   }
-
-  /** Close chat completely */
-  closeChat() {
-    this.onClearHistory();
-    this.drawer?.close();
-    this.closeChatEvent.emit(); // notify parent to show welcome screen again
-  }
-
-
 }

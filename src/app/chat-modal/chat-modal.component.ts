@@ -75,22 +75,6 @@ export class ChatModalComponent implements AfterViewChecked {
     { id: 'end', label: 'End Chat', colorClass: 'red', icon: 'cancel' }
   ];
 
-  headerActions = [
-    { icon: 'translate', title: 'Translate', click: () => this.onTranslateClick() },
-    { icon: 'settings', title: 'Settings', click: () => this.onSettingsClick() },
-    { icon: 'remove', title: 'Minimize', click: () => this.onMinimizeClick() },
-    { icon: 'close', title: 'Close', click: () => this.closeChat() }
-  ];
-
-  languages = [
-    { id: 1, code: 'en', label: 'English' },
-    { id: 2, code: 'hi', label: 'हिंदी' }
-  ];
-
-  settingsOptions = [
-    { id: 1, label: 'Clear History', action: () => this.onClearHistory() },
-    { id: 2, label: 'Sound Notifications', action: () => this.onToggleSound() }
-  ];
 
   lastSelectedModule: string;
 
@@ -155,14 +139,14 @@ export class ChatModalComponent implements AfterViewChecked {
       return;
     }
 
-   else if (action.id === 'services') {
+    else if (action.id === 'services') {
       this.showmainmenu = false;
-      this.subModules = []; 
+      this.subModules = [];
       this.showServices = true;
       this.cdr.detectChanges();
       return;
     }
-    
+
 
     if (action.id === 'end') {
       this.closeChat();
@@ -175,7 +159,7 @@ export class ChatModalComponent implements AfterViewChecked {
   onServiceSelected(service: string) {
     this.sendMessage(service);  // user message
     this.showServices = false;
-  
+
     this.messages = [
       ...this.messages,
       {
@@ -185,10 +169,10 @@ export class ChatModalComponent implements AfterViewChecked {
         timestamp: new Date()
       }
     ];
-  
+
     this.cdr.detectChanges();
   }
-  
+
 
   selectStatusModule(moduleName: string) {
     this.lastSelectedModule = moduleName;
@@ -350,7 +334,7 @@ Last Updated: ${response.lastUpdated}
   closeChat() {
     this.onClearHistory();
     this.drawer?.close();
-    this.closeChatEvent.emit();
+    // this.closeChatEvent.emit();
   }
 
   autoResizeTextArea(event: Event): void {
@@ -363,6 +347,19 @@ Last Updated: ${response.lastUpdated}
     if (!event.shiftKey) {
       event.preventDefault();
       this.sendMessage();
+    }
+  }
+
+  selectLanguage(lang: any) {
+    console.log("Language selected:", lang);
+  }
+
+  onHeaderSettingSelected(setting: any) {
+    if (setting.label === "Clear History") {
+      this.onClearHistory();
+    }
+    else if (setting.label === "Sound Notifications") {
+      this.onToggleSound();
     }
   }
 

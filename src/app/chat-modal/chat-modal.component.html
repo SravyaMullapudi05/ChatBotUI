@@ -1,7 +1,7 @@
 <div class="chat-modal">
 
   <!-- Header -->
-  <div class="chat-header">
+  <!-- <div class="chat-header">
     <div class="header-left">
       <div class="chat-icon-wrapper">
         <mat-icon class="chat-icon">smart_toy</mat-icon>
@@ -23,24 +23,28 @@
       </button>
     </div>
 
-    <!-- language menu -->
     <div class="language-menu" *ngIf="showLanguageMenu">
       <div class="lang-option" *ngFor="let lang of languages" (click)="selectLanguage(lang)">
         {{ lang.label }}
       </div>
     </div>
 
-    <!-- settings menu -->
     <div class="settings-menu" *ngIf="showSettingsMenu">
       <div class="settings-title">Chat Settings</div>
       <div class="settings-option" *ngFor="let item of settingsOptions" (click)="item.action()">
         {{ item.label }}
       </div>
     </div>
-  </div>
+  </div> -->
+
+  <app-header (translateClick)="onTranslateClick()" (settingsClick)="onSettingsClick()"
+    (minimizeClick)="onMinimizeClick()" (closeClick)="closeChat()" (languageSelected)="selectLanguage($event)"
+    (settingsSelected)="onHeaderSettingSelected($event)"></app-header>
+
 
   <!-- Chat messages -->
-  <div class="chat-messages" #scrollContainer>
+  <!-- #scrollContainer -->
+  <div class="chat-messages">
 
     <!-- Normal messages -->
     <div *ngFor="let message of messages; trackBy: trackByMessageId" class="message-row"
