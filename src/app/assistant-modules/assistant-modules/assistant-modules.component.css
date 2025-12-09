@@ -1,0 +1,48 @@
+.status-module-box {
+    padding: 14px;
+  }
+  
+  .bot-status-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  .bot-status-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #1F4E79;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  }
+  
+  .bot-status-msg {
+    font-size: 15px;
+    width: calc(100% - 60px);
+  }
+  
+  .module-buttons {
+    margin-left: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .module-btn {
+    padding: 12px 16px;
+    border-radius: 16px;
+    border: 2px solid #1F4E79;
+    background: #F1F6FF;
+    color: #1F4E79;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  
+  .module-btn:hover {
+    background: #E0ECFF;
+  }
+  

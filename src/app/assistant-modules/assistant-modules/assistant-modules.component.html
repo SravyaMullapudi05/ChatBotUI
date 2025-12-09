@@ -1,0 +1,40 @@
+<div class="status-module-box">
+
+    <!-- SHOW MODULE LIST -->
+    <ng-container *ngIf="!awaitingNumber">
+  
+      <div class="bot-status-row">
+        <div class="bot-status-avatar">
+          <mat-icon>smart_toy</mat-icon>
+        </div>
+  
+        <div class="bot-status-msg">
+          Please select a module to check status:
+        </div>
+      </div>
+  
+      <div class="module-buttons">
+        <button class="module-btn"
+                *ngFor="let m of modules"
+                (click)="onModuleClick(m)">
+          {{ m }}
+        </button>
+      </div>
+  
+    </ng-container>
+  
+    <!-- WAITING FOR APPLICATION NUMBER -->
+    <ng-container *ngIf="awaitingNumber">
+      <div class="bot-status-row">
+        <div class="bot-status-avatar">
+          <mat-icon>smart_toy</mat-icon>
+        </div>
+  
+        <div class="bot-status-msg">
+          Please enter your Application Number (8–12 alphanumeric characters) in the chat box below:
+        </div>
+      </div>
+    </ng-container>
+  
+  </div>
+  
