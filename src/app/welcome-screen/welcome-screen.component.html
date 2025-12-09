@@ -1,0 +1,65 @@
+<div class="chat-modal" *ngIf="!getstarted">
+
+    <!-- =============================== -->
+    <!--  WELCOME SCREEN (FIRST SCREEN)  -->
+    <!-- =============================== -->
+    <div class="welcome-screen">
+
+        <img src="../assets/images/logo.png" width="40px" height="40px" class="mb-3" />
+
+        <h2 class="welcome-title">Welcome to Bhulekh Assistant!</h2>
+        <p class="welcome-subtitle">
+            Your intelligent guide for land records and services
+        </p>
+
+        <div class="welcome-box">
+            <div class="help-title">I can help you with:</div>
+
+            <button class="welcome-action">
+                <mat-icon class="icon-box">task_alt</mat-icon>
+                Check application status
+            </button>
+
+            <button class="welcome-action">
+                <mat-icon class="icon-box">task_alt</mat-icon>
+                Access services and FAQs
+            </button>
+
+            <button class="welcome-action">
+                <mat-icon class="icon-box">task_alt</mat-icon>
+                Download forms and documents
+            </button>
+
+            <button class="welcome-action">
+                <mat-icon class="icon-box">task_alt</mat-icon>
+                Get contact information
+            </button>
+        </div>
+
+        <div class="language-label">
+            <div class="d-flex">
+                <mat-icon>language</mat-icon>
+                <span class="ps-3">Select your preferred language:</span></div>
+        </div>
+
+        <div class="language-buttons">
+            <button class="lang-btn">
+              <div> <img src="../assets/images/IN.png" width="20px" height="13px" class="mb-2" /> </div> English
+            </button>
+
+            <button class="lang-btn">
+              <div><img src="../assets/images/GB.png" width="20px" height="13px" class="mb-2" /> </div>  हिंदी
+            </button>
+        </div>
+
+        <button class="secondary_btn" (click)="getStarted()">
+            Get started
+        </button>
+
+    </div>
+
+</div>
+
+<div *ngIf="getstarted">
+    <app-chat-modal [drawer]="drawer" (closeChatEvent)="makeGetStartedFalse()"></app-chat-modal>
+</div>

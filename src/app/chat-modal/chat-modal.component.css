@@ -1,0 +1,330 @@
+/* ========================================================== */
+/*                 BHULEKHA CHATBOT FULL THEME                */
+/*                Clean, Modern, Pastel UI Version            */
+/* ========================================================== */
+
+/* ---------- Main Container ---------- */
+.chat-modal {
+  width: 400px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: 'Inter', 'Roboto', sans-serif;
+  box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.12);
+}
+
+/* ===== HEADER ===== */
+.chat-header {
+  background: #1F4E79;
+  padding: 12px 16px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #d3dce6;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.chat-icon-wrapper {
+  width: 40px;
+  height: 40px;
+  background: white;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+.chat-icon {
+  color: #1F4E79;
+  font-size: 22px;
+}
+
+.header-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.chat-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.chat-status {
+  font-size: 12px;
+  opacity: 0.9;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4CAF50;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.header-btn mat-icon {
+  font-size: 18px;
+}
+
+/* ===== MENUS ===== */
+
+.language-menu,
+.settings-menu {
+  position: absolute;
+  top: 60px;
+  right: 16px;
+  width: 160px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0px 3px 12px rgba(0,0,0,0.15);
+  z-index: 3000;
+  padding: 6px 0;
+}
+
+.lang-option,
+.settings-option {
+  padding: 10px 16px;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.lang-option:hover,
+.settings-option:hover {
+  background: #EEF3FF;
+}
+
+.settings-title {
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #777;
+  border-bottom: 1px solid #eee;
+}
+
+/* ===== CHAT AREA ===== */
+.chat-messages {
+  flex: 1;
+  padding: 16px;
+  background: #F8FAFC;
+  overflow-y: auto;
+}
+
+.message-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.message-avatar,
+.message-user-avatar {
+  width: 36px;
+  height: 36px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.message-avatar mat-icon {
+  color: #1F4E79;
+}
+
+/* ===== BOT MESSAGE ===== */
+.bot-message {
+  background: #F1F6FF;
+  padding: 14px 18px;
+  border-radius: 14px;
+  border: 1px solid #D7E5FF;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+  max-width: 85%;
+  font-size: 15px;
+}
+
+/* ===== USER MESSAGE ===== */
+.user-row {
+  justify-content: flex-end;
+}
+
+.user-row .message-content {
+  background: #164E63;
+  color: white;
+  padding: 13px 18px;
+  border-radius: 14px;
+  max-width: 85%;
+  font-size: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.10);
+}
+
+.timestamp {
+  font-size: 12px;
+  color: #9AA0A6;
+  margin-top: 4px;
+}
+
+/* ===================================================== */
+/*   COMBINED BOT BUBBLE (WELCOME TEXT + MENU BUTTONS)   */
+/* ===================================================== */
+
+.bot-combined-bubble {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.bot-bubble-left {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #1F4E79;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+
+.bot-bubble-content {
+  background: #F1F6FF;
+  border: 1px solid #D7E5FF;
+  border-radius: 14px;
+  padding: 14px;
+  width: calc(100% - 60px);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.bot-welcome-text {
+  font-size: 15px;
+  margin-bottom: 12px;
+  color: #123456;
+}
+
+/* ===== QUICK ACTION BUTTONS ===== */
+
+.quick-action-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.quick-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 58px;
+}
+
+/* icon in button */
+.btn-icon-wrap {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon {
+  font-size: 20px;
+}
+
+/* ---- Pastel Theme Colors ---- */
+.quick-action-btn.blue     { background: #D8E8FF; border-color: #AFCBFF; color: #003F8A; }
+.quick-action-btn.purple   { background: #DDF7F9; border-color: #B4ECEF; color: #0F6B75; }
+.quick-action-btn.green    { background: #E9F7E8; border-color: #C9ECC6; color: #2E7D32; }
+.quick-action-btn.orange   { background: #FFE7D6; border-color: #F9C9A7; color: #B2601B; }
+.quick-action-btn.teal     { background: #E6EEFF; border-color: #C6D8FF; color: #2A5BA8; }
+.quick-action-btn.red      { background: #FFE4E3; border-color: #F8B4B4; color: #B32020; }
+
+.quick-action-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(10,20,40,0.06);
+}
+
+/* ===== STATUS MODULE ===== */
+.status-module-box {
+  padding: 14px;
+}
+
+.module-buttons {
+  margin-left: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.module-btn {
+  padding: 12px 16px;
+  border-radius: 16px;
+  border: 2px solid #1F4E79;
+  background: #F1F6FF;
+  color: #1F4E79;
+  font-size: 15px;
+}
+
+/* ===== INPUT AREA ===== */
+.chat-input {
+  background: white;
+  border-top: 1px solid #E1E7EF;
+  padding: 14px 16px;
+}
+
+.input-wrapper {
+  flex: 1;
+  border: 1px solid #CDD6E1;
+  background: white;
+  border-radius: 20px;
+  padding: 8px 12px;
+  display: flex;
+  gap: 8px;
+}
+
+.message-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 14px;
+}
+
+.send-btn {
+  width: 44px;
+  height: 44px;
+  background: #1F4E79;
+  color: white;
+  border-radius: 12px;
+}
+
+.help-text {
+  font-size: 12px;
+  text-align: center;
+  color: #9AA0A6;
+}
