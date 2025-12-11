@@ -12,6 +12,7 @@ import {
 import { MatSidenav } from '@angular/material/sidenav';
 import { FaqsService } from '../services/faqs.service';
 import { StatusService } from '../services/status.service';
+import { DownloadsService } from '../services/downloads.service';
 
 type Sender = 'bot' | 'user';
 
@@ -87,15 +88,19 @@ export class ChatModalComponent implements AfterViewChecked {
     { id: 7, name: 'Village Map Purchase', action: () => window.open('https://geoportal.mp.gov.in/khasraservice/uLogin.aspx', '_blank') }
   ];
 
+  downloadModules = []
+
   faqModules: any[] = [];
   fqaQuestions: any[] = [];
   isProcessing: boolean;
   showButtons: boolean;
+  downloadSubmodules: { id: number; title: string; icon: string; }[];
 
   constructor(
     private cdr: ChangeDetectorRef,
     private faqService: FaqsService,
-    private statusService: StatusService
+    private statusService: StatusService,
+    private downloadService: DownloadsService
   ) { }
 
   /* AUTO SCROLL */
@@ -169,6 +174,7 @@ export class ChatModalComponent implements AfterViewChecked {
     if (action.id === 'status') return this.loadStatusModule();
     if (action.id === 'services') return this.loadServiceModule();
     if (action.id === 'faqs') return this.loadFaqModule();
+    if (action.id === 'downloads') return this.loadDownloadsModule();
   }
 
   private loadStatusModule() {
@@ -185,6 +191,12 @@ export class ChatModalComponent implements AfterViewChecked {
       ])
     ];
     setTimeout(() => { this.hideTyping(msgs); this.showmainmenu = false; }, 600);
+  }
+
+  private loadDownloadsModule() {
+    this.downloadModules = this.downloadService.getAlldownloads();
+    const msg = this.createMessage('Please select a category for your download:', 'bot', this.downloadModules);
+    setTimeout(() => { this.hideTyping(msg); this.showmainmenu = false; }, 600);
   }
 
   private loadFaqModule() {
@@ -223,10 +235,29 @@ export class ChatModalComponent implements AfterViewChecked {
 
       setTimeout(() => this.hideTyping(faqMsgs), 600);
     }
+
+    if (this.selectedAction === 'downloads') {
+      this.downloadSubmodules = this.downloadService.getdownloadsSubmodules(module);
+      this.sendMessage(module.name);
+      this.showTyping('bot');
+
+      const downloadMsgs: ChatMessage[] = [
+        { ...this.createMessage('Please proceed further:', 'bot'), questions: this.downloadSubmodules }
+      ];
+
+      setTimeout(() => this.hideTyping(downloadMsgs), 600);
+    }
   }
 
   showAnsforFaq(list: any[], selected: any) {
-    list.forEach(q => q.showanswer = (q.id === selected.id ? !q.showanswer : false));
+    if (selected.question) {
+      list.forEach(q => q.showanswer = (q.id === selected.id ? !q.showanswer : false));
+      return;
+    }
+    if (selected.title) {
+      this.downloadService.download(selected)      
+      return;
+    }
   }
 
   /* SELECT STATUS MODULE */

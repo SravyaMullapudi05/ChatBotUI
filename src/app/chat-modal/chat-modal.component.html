@@ -76,9 +76,11 @@
           <div class="module-buttons w-100 module-btn suggesstion mb-2" *ngFor="let q of message.questions">
             <div class="d-flex justify-content-between">
               <button class="noclass text-left" (click)="showAnsforFaq(message.questions,q)">
-                {{ q.question }}
-                <mat-icon *ngIf="!q.showanswer">chevron_right</mat-icon>
-                <mat-icon *ngIf="q.showanswer">expand_more</mat-icon>
+                <span>{{ q.question || q.title }}</span>
+                <mat-icon *ngIf="!q.icon">
+                  {{ q.showanswer ? 'expand_less' : 'expand_more' }}
+                </mat-icon>
+                <mat-icon *ngIf="q.icon">arrow_downward</mat-icon>
               </button>
             </div>
             <div class="faq-answer" *ngIf="q.showanswer"> {{ q.answer }}</div>
@@ -92,7 +94,7 @@
           </div>
 
           <!-- STATUS CARD (Application and Grievance status) -->
-           <!-- <div *ngIf="message.statusData" class="status-wrapper">
+          <!-- <div *ngIf="message.statusData" class="status-wrapper">
 
             <div class="status-card">
 
@@ -132,14 +134,14 @@
               <span>Application number</span>
               <p class="mb-1">{{ item.applicationNumber }}</p>
             </div>
-          
+
             <div class="d-flex justify-content-between">
-          
+
               <div class="details">
                 <span>Designation</span>
                 <p class="mb-1">{{ item.designation }}</p>
               </div>
-          
+
               <div class="details">
                 <span>Date</span>
                 <p class="d-grid mb-1">
@@ -147,16 +149,16 @@
                   <span>{{ item.time }}</span>
                 </p>
               </div>
-          
+
             </div>
-          
+
             <div class="details d-inline-grid">
               <span>Status</span>
               <span [ngClass]="item.class">{{ item.status }}</span>
             </div>
-          
+
           </div>
-           
+
 
           <!-- time -->
           <div class="timestamp">{{ formatTimestamp(message.timestamp) }}</div>
