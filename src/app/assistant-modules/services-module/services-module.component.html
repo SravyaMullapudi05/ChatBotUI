@@ -1,0 +1,37 @@
+<div class="status-module-box" *ngFor="let msg of messages">
+  <div class="bot-status-row d-flex w-80">
+    <div class="bot-status-avatar me-2">
+      <img src="../assets/images/logo.png" width="24px" height="24px" class="mb-3" />
+    </div>
+
+    <div>
+      <div class="bot-status-msg bot-bubble-content w-100">
+        {{msg.headermessage}}
+      </div>
+
+      <div class="module-buttons w-100" *ngIf="msg.subModules">
+        <button class="module-btn suggesstion" *ngFor="let m of msg.subModules" (click)="selectStatusModule(m)">
+          {{ m.name }}
+        </button>
+      </div>
+
+      <!-- YES / NO Feedback Buttons -->
+      <div class="feedback-buttons" *ngIf="msg.buttons">
+        <button class="yes-btn" (click)="msg.buttons[0].action()">
+          Yes
+        </button>
+
+        <button class="no-btn" (click)="msg.buttons[1].action()">
+          No
+        </button>
+      </div>
+
+      <!-- Timestamp -->
+      <div class="timestamp">
+        {{ currentTime }}
+      </div>
+
+    </div>
+  </div>
+
+</div>

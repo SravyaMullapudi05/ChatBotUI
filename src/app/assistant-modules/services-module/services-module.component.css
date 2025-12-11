@@ -1,0 +1,70 @@
+.status-module-box {
+  width: 100%;
+  margin: 12px 0;
+}
+
+.bot-status-row {
+  display: flex;
+  align-items: flex-start;
+}
+
+.bot-status-avatar img {
+  border-radius: 50%;
+}
+
+.bot-status-msg {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.module-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.module-btn {
+  border: 1px solid var(--primary);
+  background: #fff;
+  padding: 10px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+}
+
+.module-btn:hover {
+  background: #f2f6ff;
+}
+
+.feedback-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.yes-btn,
+.no-btn {
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.yes-btn {
+  background: #1a4fff;
+  color: #fff;
+}
+
+.no-btn {
+  background: #e4ebff;
+  color: #1a4fff;
+}
+
+.timestamp {
+  font-size: 12px;
+  color: #8f8f8f;
+  margin-top: 4px;
+}

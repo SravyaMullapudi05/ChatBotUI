@@ -1,0 +1,13 @@
+
+
+export const environment = {
+  production: false,
+
+  apiBase: 'https://uat2.mpbhulekh.gov.in/',
+
+  // required backend headers
+  apiToken: '20ba428d39b535cd4245bd80fe21e7109254739def690b065e1b7a82f7ba8b057c2a53091ed94f89e168d81c69703a8cb34699a17d0aa6d5905e92158c0bd7f46241a77fee8ab4d486697833d1aa4d6311810e64aa9b3e32e28513a49e8ea5a3097a55b3ca155f2e2b75679cf7d02410c976809a875d87131a6265400ebfa05098005a7969a769aaf0cfc5c0199ef31827f6751e0e210caa5981be8dc4737613256284fa19730d8335aa94720139f054cf087a50b1c813f168d395e63e4c585c6c770628435c12e1c9e8e2e0352a2486b02e7205dbd0ea3c8b04077b29f35fb6',
+  qpLanguageCode: 'en',
+  qpTcRequestId: 'dNC91D4P-EWIB-WEUIWB-34NJDJBS',
+  qpfUuid: '9e64d96a-e37f-43ea-b6b1-020ffe66ec43'
+};
