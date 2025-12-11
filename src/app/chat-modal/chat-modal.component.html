@@ -92,7 +92,7 @@
           </div>
 
           <!-- STATUS CARD (Application and Grievance status) -->
-           <div *ngIf="message.statusData" class="status-wrapper">
+           <!-- <div *ngIf="message.statusData" class="status-wrapper">
 
             <div class="status-card">
 
@@ -124,106 +124,39 @@
 
             </div>
 
-          </div> 
+          </div>  -->
 
-          <div class="service-box mb-2 mt-2" *ngIf="message.statusData">
+          <div class="service-box mb-2 mt-2" *ngIf="message.statusData as item">
 
-            <div class="details"><span>Application number</span>
-
-              <p class="mb-1">APP12345</p>
-
+            <div class="details">
+              <span>Application number</span>
+              <p class="mb-1">{{ item.applicationNumber }}</p>
             </div>
-
+          
             <div class="d-flex justify-content-between">
-
-              <div class="details"><span>Designation</span>
-
-                <p class="mb-1">SI Helpdesk</p>
-
+          
+              <div class="details">
+                <span>Designation</span>
+                <p class="mb-1">{{ item.designation }}</p>
               </div>
-
-              <div class="details"><span>Date</span>
-
-                <p class="d-grid mb-1">16-09-2025 <span class="">12:05:00 PM</span></p>
-
+          
+              <div class="details">
+                <span>Date</span>
+                <p class="d-grid mb-1">
+                  {{ item.date }}
+                  <span>{{ item.time }}</span>
+                </p>
               </div>
-
+          
             </div>
-
-            <div class="details d-inline-grid"><span>Status</span>
-
-              <span class="status-closed">Closed</span>
-
+          
+            <div class="details d-inline-grid">
+              <span>Status</span>
+              <span [ngClass]="item.class">{{ item.status }}</span>
             </div>
-
-
+          
           </div>
-
-           <div class="service-box mb-2 mt-2"  *ngIf="message.statusData">
-
-            <div class="details"><span>Application number</span>
-
-              <p class="mb-1">APP12345</p>
-
-            </div>
-
-            <div class="d-flex justify-content-between">
-
-              <div class="details"><span>Designation</span>
-
-                <p class="mb-1">SI Helpdesk</p>
-
-              </div>
-
-              <div class="details"><span>Date</span>
-
-                <p class="d-grid mb-1">16-09-2025 <span class="">12:05:00 PM</span></p>
-
-              </div>
-
-            </div>
-
-            <div class="details d-inline-grid"><span>Status</span>
-
-              <span class="status-open">Open </span>
-
-            </div>
-
-
-          </div>
-
-          <div class="service-box mb-2 mt-2"  *ngIf="message.statusData">
-
-            <div class="details"><span>Application number</span>
-
-              <p class="mb-1">APP12345</p>
-
-            </div>
-
-            <div class="d-flex justify-content-between">
-
-              <div class="details"><span>Designation</span>
-
-                <p class="mb-1">SI Helpdesk</p>
-
-              </div>
-
-              <div class="details"><span>Date</span>
-
-                <p class="d-grid mb-1">16-09-2025 <span class="">12:05:00 PM</span></p>
-
-              </div>
-
-            </div>
-
-            <div class="details d-inline-grid"><span>Status</span>
-
-              <span class="status-live">Request Initiated</span>
-
-            </div>
-
-
-          </div> 
+           
 
           <!-- time -->
           <div class="timestamp">{{ formatTimestamp(message.timestamp) }}</div>

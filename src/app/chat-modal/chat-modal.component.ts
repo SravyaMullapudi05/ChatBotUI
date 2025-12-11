@@ -323,11 +323,22 @@ export class ChatModalComponent implements AfterViewChecked {
 
   getStatusClass(status: string) {
     switch (status.toLowerCase()) {
-      case 'closed': return 'status-closed';
-      case 'open': return 'status-open';
-      case 'request initiated': return 'status-live';
-      default: return '';
-    }
+      case 'closed':
+      case 'close':
+        return 'status-closed';
+    
+      case 'open':
+      case 'opened':
+        return 'status-open';
+    
+      case 'request initiated':
+      case 'initiated':
+      case 'in progress':
+        return 'status-live';
+    
+      default:
+        return '';
+    }    
   }
 
   /* ADD BOT MESSAGE */
