@@ -89,6 +89,8 @@ export class ChatModalComponent implements AfterViewChecked {
 
   faqModules: any[] = [];
   fqaQuestions: any[] = [];
+  isProcessing: boolean;
+  showButtons: boolean;
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -326,19 +328,19 @@ export class ChatModalComponent implements AfterViewChecked {
       case 'closed':
       case 'close':
         return 'status-closed';
-    
+
       case 'open':
       case 'opened':
         return 'status-open';
-    
+
       case 'request initiated':
       case 'initiated':
       case 'in progress':
         return 'status-live';
-    
+
       default:
         return '';
-    }    
+    }
   }
 
   /* ADD BOT MESSAGE */
@@ -349,9 +351,22 @@ export class ChatModalComponent implements AfterViewChecked {
 
   /* SERVICE FEEDBACK */
   onservicebuttonclick(ans: string) {
-    this.messages = [...this.messages, this.createMessage(ans, 'user')];
-    setTimeout(() => { this.messages = []; this.showmainmenu = true; }, 400);
+    // Add user's message
+    this.messages.push(this.createMessage(ans, 'user'));
+
+    // Hide buttons immediately
+    this.showButtons = false;
+
+    // Wait for DOM to update before clearing chat
+    setTimeout(() => {
+      this.messages = [];
+      this.showmainmenu = true;
+
+      // Force UI refresh if using OnPush
+      this.cdr.detectChanges();
+    }, 900);
   }
+
 
   /* HEADER EVENTS */
   onTranslateClick() { }
