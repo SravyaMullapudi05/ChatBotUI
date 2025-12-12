@@ -136,7 +136,7 @@ export class ChatModalComponent implements AfterViewChecked {
 
     if (this.awaitingApplicationNumber) {
       this.awaitingApplicationNumber = false;
-      this.handleApplicationNumber(text.trim());
+      this.handleApplicationNumber(text.trim(),this.lastSelectedModule);
     }
   }
 
@@ -279,7 +279,7 @@ export class ChatModalComponent implements AfterViewChecked {
   /* ───────────────────────────────────────────────
      FIXED + FINAL STATUS HANDLER
      ─────────────────────────────────────────────── */
-  handleApplicationNumber(appId: string) {
+  handleApplicationNumber(appId: string,selectedmodule) {
     const valid = /^[0-9]{8,12}$/;
 
     //     if (!valid.test(appId)) {
@@ -294,7 +294,7 @@ export class ChatModalComponent implements AfterViewChecked {
 
     this.showTyping('bot');
 
-    this.statusService.getTicketStatus(appId).subscribe({
+    this.statusService.getTicketStatus(appId,selectedmodule).subscribe({
       next: (res) => {
         this.hideTyping([]);
 
