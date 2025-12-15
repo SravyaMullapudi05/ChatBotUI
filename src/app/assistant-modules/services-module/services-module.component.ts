@@ -1,15 +1,46 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
+import { OverlayModule } from '@angular/cdk/overlay';
+
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
+import { ChatModalComponent } from 'src/app/chat-modal/chat-modal.component';
+import { WelcomeScreenComponent } from 'src/app/welcome-screen/welcome-screen.component';
 
 @Component({
   selector: 'app-services-module',
   templateUrl: './services-module.component.html',
-  styleUrls: ['./services-module.component.css']
+  styleUrls: ['./services-module.component.css'],
+  standalone: true,
+  imports: [NgFor, NgIf,
+    CommonModule,
+    ChatModalComponent,
+    MatIconModule,
+    MatTooltipModule,
+    MatButtonModule,
+    MatInputModule,
+    
+    MatSidenavModule,
+    MatDialogModule,
+    FormsModule,
+    OverlayModule,
+    MatMenuModule,
+    
+    WelcomeScreenComponent
+  ],
 })
 export class ServicesModuleComponent implements OnInit {
 
   @Input() subModules: any[] = [];
   @Input() moduleName: string;
-  @Input() Allmessages: any[]=[]
+  @Input() Allmessages: any[] = []
   @Output() moduleSelected = new EventEmitter<string>();
 
   currentTime = "";
@@ -44,7 +75,7 @@ export class ServicesModuleComponent implements OnInit {
     //   }
     // ];
 
-    this.messages=this.Allmessages
+    this.messages = this.Allmessages
   }
 
   messages = [];

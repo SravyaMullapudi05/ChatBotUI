@@ -107,6 +107,8 @@ export class DownloadsService {
     return downloadData ? downloadData.items : [];
   }
 
-  download(downloaditem){}
+  download(downloaditem){
+    
+  }
 
 }

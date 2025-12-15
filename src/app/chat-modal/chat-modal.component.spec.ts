@@ -8,8 +8,8 @@ describe('ChatModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChatModalComponent ]
-    })
+    imports: [ChatModalComponent]
+})
     .compileComponents();
   });
 

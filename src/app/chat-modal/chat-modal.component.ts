@@ -9,10 +9,24 @@ import {
   Output,
   EventEmitter
 } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { FaqsService } from '../services/faqs.service';
 import { StatusService } from '../services/status.service';
 import { DownloadsService } from '../services/downloads.service';
+import { OverlayModule } from '@angular/cdk/overlay';
+
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
+import { WelcomeScreenComponent } from '../welcome-screen/welcome-screen.component';
+import { ChatFooterComponent } from '../shared-module/chat-footer/chat-footer.component';
+import { HeaderComponent } from '../shared-module/chat-header/header.component';
+import { CommonModule } from '@angular/common';
 
 type Sender = 'bot' | 'user';
 
@@ -40,7 +54,25 @@ export interface QuickAction {
   selector: 'app-chat-modal',
   templateUrl: './chat-modal.component.html',
   styleUrls: ['./chat-modal.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatButtonModule,
+    MatInputModule,
+    
+    MatSidenavModule,
+    MatDialogModule,
+    FormsModule,
+    OverlayModule,
+    MatMenuModule,
+    
+    WelcomeScreenComponent,
+    ChatFooterComponent,
+    HeaderComponent
+  ],
 })
 export class ChatModalComponent implements AfterViewChecked {
 
@@ -136,7 +168,7 @@ export class ChatModalComponent implements AfterViewChecked {
 
     if (this.awaitingApplicationNumber) {
       this.awaitingApplicationNumber = false;
-      this.handleApplicationNumber(text.trim(),this.lastSelectedModule);
+      this.handleApplicationNumber(text.trim(), this.lastSelectedModule);
     }
   }
 
@@ -255,7 +287,7 @@ export class ChatModalComponent implements AfterViewChecked {
       return;
     }
     if (selected.title) {
-      this.downloadService.download(selected)      
+      this.downloadService.download(selected)
       return;
     }
   }
@@ -279,7 +311,7 @@ export class ChatModalComponent implements AfterViewChecked {
   /* ───────────────────────────────────────────────
      FIXED + FINAL STATUS HANDLER
      ─────────────────────────────────────────────── */
-  handleApplicationNumber(appId: string,selectedmodule) {
+  handleApplicationNumber(appId: string, selectedmodule) {
     const valid = /^[0-9]{8,12}$/;
 
     //     if (!valid.test(appId)) {
@@ -294,7 +326,7 @@ export class ChatModalComponent implements AfterViewChecked {
 
     this.showTyping('bot');
 
-    this.statusService.getTicketStatus(appId,selectedmodule).subscribe({
+    this.statusService.getTicketStatus(appId, selectedmodule).subscribe({
       next: (res) => {
         this.hideTyping([]);
 

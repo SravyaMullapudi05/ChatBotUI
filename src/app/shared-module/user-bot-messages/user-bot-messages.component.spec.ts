@@ -8,8 +8,8 @@ describe('UserBotMessagesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserBotMessagesComponent ]
-    })
+    imports: [UserBotMessagesComponent]
+})
     .compileComponents();
   });
 

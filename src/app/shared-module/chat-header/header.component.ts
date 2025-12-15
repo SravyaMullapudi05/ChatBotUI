@@ -1,9 +1,37 @@
 import { Component, EventEmitter, Output, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { CommonModule, NgFor } from '@angular/common';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatMenuTrigger, MatMenu, MatMenuItem, MatMenuModule } from '@angular/material/menu';
+import { MatButton, MatButtonModule, MatIconButton } from '@angular/material/button';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { FormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
+import { ChatFooterComponent } from '../chat-footer/chat-footer.component';
+import { UserBotMessagesComponent } from '../user-bot-messages/user-bot-messages.component';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
+  standalone: true,
+  imports: [MatButton, MatMenuTrigger, MatIcon, MatMenu, NgFor, MatMenuItem, MatIconButton,
+    CommonModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatButtonModule,
+    MatInputModule,
+    
+    MatSidenavModule,
+    MatDialogModule,
+    FormsModule,
+    OverlayModule,
+    MatMenuModule,
+    UserBotMessagesComponent,
+    ChatFooterComponent],
 })
 export class HeaderComponent {
 
@@ -85,13 +113,13 @@ export class HeaderComponent {
 
     // Close language dropdown if clicked outside
     if (this.showLanguageMenu && this.langDropdown &&
-        !this.langDropdown.nativeElement.contains(click)) {
+      !this.langDropdown.nativeElement.contains(click)) {
       this.showLanguageMenu = false;
     }
 
     // Close settings dropdown if clicked outside
     if (this.showSettingsMenu && this.settingsDropdown &&
-        !this.settingsDropdown.nativeElement.contains(click)) {
+      !this.settingsDropdown.nativeElement.contains(click)) {
       this.showSettingsMenu = false;
     }
   }

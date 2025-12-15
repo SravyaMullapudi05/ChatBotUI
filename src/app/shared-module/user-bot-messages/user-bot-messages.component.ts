@@ -1,10 +1,39 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ChatMessage } from 'src/app/chat-modal/chat-modal.component';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { NgFor, NgClass, NgIf, CommonModule } from '@angular/common';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
+import { ChatFooterComponent } from '../chat-footer/chat-footer.component';
+import { HeaderComponent } from '../chat-header/header.component';
 
 @Component({
   selector: 'app-user-bot-messages',
   templateUrl: './user-bot-messages.component.html',
-  styleUrls: ['./user-bot-messages.component.css']
+  styleUrls: ['./user-bot-messages.component.css'],
+  standalone: true,
+  imports: [NgFor, NgClass, NgIf, MatIcon,
+    CommonModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatButtonModule,
+    MatInputModule,
+    
+    MatSidenavModule,
+    MatDialogModule,
+    FormsModule,
+    OverlayModule,
+    MatMenuModule,
+    ChatFooterComponent,
+    HeaderComponent
+  ],
 })
 export class UserBotMessagesComponent implements OnInit {
 
@@ -13,7 +42,7 @@ export class UserBotMessagesComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  
+
   @Input() messages: ChatMessage[] = [];
   @Output() messageClicked = new EventEmitter<ChatMessage>();
 
@@ -33,5 +62,5 @@ export class UserBotMessagesComponent implements OnInit {
   onMessageClick(message: ChatMessage) {
     this.messageClicked.emit(message);
   }
-  
+
 }
