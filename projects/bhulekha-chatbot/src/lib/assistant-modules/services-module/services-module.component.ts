@@ -10,9 +10,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { WelcomeScreenComponent } from '../../welcome-screen/welcome-screen.component';
 
-import { ChatModalComponent } from 'src/app/chat-modal/chat-modal.component';
-import { WelcomeScreenComponent } from 'src/app/welcome-screen/welcome-screen.component';
 
 @Component({
   selector: 'app-services-module',
@@ -21,7 +20,6 @@ import { WelcomeScreenComponent } from 'src/app/welcome-screen/welcome-screen.co
   standalone: true,
   imports: [NgFor, NgIf,
     CommonModule,
-    ChatModalComponent,
     MatIconModule,
     MatTooltipModule,
     MatButtonModule,

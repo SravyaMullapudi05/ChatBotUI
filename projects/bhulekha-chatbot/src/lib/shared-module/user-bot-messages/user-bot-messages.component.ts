@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ChatMessage } from 'src/app/chat-modal/chat-modal.component';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { NgFor, NgClass, NgIf, CommonModule } from '@angular/common';
 import { OverlayModule } from '@angular/cdk/overlay';
@@ -12,6 +11,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { ChatFooterComponent } from '../chat-footer/chat-footer.component';
+import { ChatMessage } from '../../chat-modal/chat-modal.component';
 import { HeaderComponent } from '../chat-header/header.component';
 
 @Component({

@@ -2,19 +2,13 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatButtonModule, MatIconButton } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
-import { OverlayModule } from '@angular/cdk/overlay';
-import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-import { HeaderComponent } from '../chat-header/header.component';
-import { UserBotMessagesComponent } from '../user-bot-messages/user-bot-messages.component';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-chat-footer',
+  selector: 'lib-chat-footer',
   templateUrl: './chat-footer.component.html',
   styleUrls: ['./chat-footer.component.css'],
   standalone: true,
@@ -23,14 +17,7 @@ import { CommonModule } from '@angular/common';
     MatIconModule,
     MatTooltipModule,
     MatButtonModule,
-    MatInputModule,
-    
-    MatSidenavModule,
-    MatDialogModule,
-    OverlayModule,
-    MatMenuModule,
-    UserBotMessagesComponent,
-    HeaderComponent
+    MatInputModule
   ],
 })
 export class ChatFooterComponent {

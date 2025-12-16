@@ -96,7 +96,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "projects/bhulekha-chatbot/src/lib/styles/chatbot-theme.css"
             ],
             "scripts": []
           }
@@ -124,6 +125,39 @@
             "production": {
               "devServerTarget": "my-angular-app:serve:production"
             }
+          }
+        }
+      }
+    },
+    "bhulekha-chatbot": {
+      "projectType": "library",
+      "root": "projects/bhulekha-chatbot",
+      "sourceRoot": "projects/bhulekha-chatbot/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/bhulekha-chatbot/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/bhulekha-chatbot/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/bhulekha-chatbot/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/bhulekha-chatbot/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
           }
         }
       }

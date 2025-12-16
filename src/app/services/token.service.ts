@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -7,11 +8,12 @@ export class TokenService {
 
   private readonly TOKEN_KEY = 'access_token';
 
-  constructor() {}
+  constructor() { }
 
   setToken(token: string): void {
     if (token) {
       localStorage.setItem(this.TOKEN_KEY, token);
+      environment['apiToken'] = token
     }
   }
 
@@ -20,6 +22,7 @@ export class TokenService {
   }
 
   clearToken(): void {
+    environment['apiToken'] = ''
     localStorage.removeItem(this.TOKEN_KEY);
   }
 

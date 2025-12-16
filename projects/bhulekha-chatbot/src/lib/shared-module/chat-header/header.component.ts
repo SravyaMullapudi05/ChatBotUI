@@ -1,37 +1,35 @@
-import { Component, EventEmitter, Output, ElementRef, HostListener, ViewChild } from '@angular/core';
-import { CommonModule, NgFor } from '@angular/common';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
-import { MatMenuTrigger, MatMenu, MatMenuItem, MatMenuModule } from '@angular/material/menu';
-import { MatButton, MatButtonModule, MatIconButton } from '@angular/material/button';
-import { OverlayModule } from '@angular/cdk/overlay';
+import {
+  Component,
+  EventEmitter,
+  Output,
+  ElementRef,
+  HostListener,
+  ViewChild
+} from '@angular/core';
+
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatInputModule } from '@angular/material/input';
-import { MatSidenavModule } from '@angular/material/sidenav';
+
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-import { ChatFooterComponent } from '../chat-footer/chat-footer.component';
-import { UserBotMessagesComponent } from '../user-bot-messages/user-bot-messages.component';
-
 @Component({
-  selector: 'app-header',
+  selector: 'lib-chat-header',
+  standalone: true,
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
-  standalone: true,
-  imports: [MatButton, MatMenuTrigger, MatIcon, MatMenu, NgFor, MatMenuItem, MatIconButton,
+  imports: [
     CommonModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatButtonModule,
-    MatInputModule,
-    
-    MatSidenavModule,
-    MatDialogModule,
     FormsModule,
-    OverlayModule,
+
+    // ✅ Angular Material MODULES only
+    MatIconModule,
+    MatButtonModule,
     MatMenuModule,
-    UserBotMessagesComponent,
-    ChatFooterComponent],
+    MatTooltipModule
+  ],
 })
 export class HeaderComponent {
 
@@ -71,7 +69,6 @@ export class HeaderComponent {
   @Output() languageSelected = new EventEmitter<any>();
   @Output() settingsSelected = new EventEmitter<any>();
 
-  /* Universal header actions */
   onHeaderButton(icon: string) {
     if (icon === 'translate') {
       this.showLanguageMenu = !this.showLanguageMenu;
@@ -106,18 +103,15 @@ export class HeaderComponent {
     this.showSettingsMenu = false;
   }
 
-  /* CLOSE ONLY WHEN CLICK IS OUTSIDE */
   @HostListener('document:click', ['$event'])
   onDocumentClick(evt: Event) {
     const click = evt.target as HTMLElement;
 
-    // Close language dropdown if clicked outside
     if (this.showLanguageMenu && this.langDropdown &&
       !this.langDropdown.nativeElement.contains(click)) {
       this.showLanguageMenu = false;
     }
 
-    // Close settings dropdown if clicked outside
     if (this.showSettingsMenu && this.settingsDropdown &&
       !this.settingsDropdown.nativeElement.contains(click)) {
       this.showSettingsMenu = false;

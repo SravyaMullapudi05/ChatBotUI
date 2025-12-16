@@ -3,6 +3,12 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "paths": {
+      "bhulekha-chatbot": [
+        "./dist/bhulekha-chatbot",
+        "projects/bhulekha-chatbot/src/public-api.ts"
+      ]
+    },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,

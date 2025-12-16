@@ -2,10 +2,16 @@
 
   <!-- Header -->
 
-  <app-header (translateClick)="onTranslateClick()" (settingsClick)="onSettingsClick()"
+  <!-- <app-header (translateClick)="onTranslateClick()" (settingsClick)="onSettingsClick()"
     (minimizeClick)="onMinimizeClick()" (closeClick)="closeChat()" (languageSelected)="selectLanguage($event)"
     (settingsSelected)="onHeaderSettingSelected($event)">
-  </app-header>
+  </app-header> -->
+
+  <lib-chat-header (translateClick)="onTranslateClick()" (settingsClick)="onSettingsClick()"
+    (minimizeClick)="onMinimizeClick()" (closeClick)="closeChat()" (languageSelected)="selectLanguage($event)"
+    (settingsSelected)="onHeaderSettingSelected($event)">
+  </lib-chat-header>
+
 
   <!-- Chat messages -->
   <!-- #scrollContainer -->
@@ -213,7 +219,11 @@
 
 
   <!-- footer/input -->
-  <app-chat-footer (sendMessageEvent)="sendMessage($event)" (emojiClickEvent)="onEmojiClick()">
-  </app-chat-footer>
+  <!-- <app-chat-footer (sendMessageEvent)="sendMessage($event)" (emojiClickEvent)="onEmojiClick()">
+  </app-chat-footer> -->
+
+  <lib-chat-footer (sendMessageEvent)="sendMessage($event)" (emojiClickEvent)="onEmojiClick()">
+  </lib-chat-footer>
+
 
 </div>

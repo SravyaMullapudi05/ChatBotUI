@@ -1,5 +1,8 @@
 import { Routes } from '@angular/router';
+import { ChatMessagesComponent } from 'bhulekha-chatbot';
 
 export const routes: Routes = [
-  // add routes later if needed
-];
+  {
+    path: '',
+    component: ChatMessagesComponent
+  }];

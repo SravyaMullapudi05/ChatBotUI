@@ -9,24 +9,25 @@ import {
   Output,
   EventEmitter
 } from '@angular/core';
-import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
-import { FaqsService } from '../services/faqs.service';
-import { StatusService } from '../services/status.service';
-import { DownloadsService } from '../services/downloads.service';
-import { OverlayModule } from '@angular/cdk/overlay';
 
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { OverlayModule } from '@angular/cdk/overlay';
 
-import { WelcomeScreenComponent } from '../welcome-screen/welcome-screen.component';
+import { FaqsService } from '../services/faqs.service';
+import { StatusService } from '../services/status.service';
+import { DownloadsService } from '../services/downloads.service';
+
 import { ChatFooterComponent } from '../shared-module/chat-footer/chat-footer.component';
 import { HeaderComponent } from '../shared-module/chat-header/header.component';
-import { CommonModule } from '@angular/common';
 
 type Sender = 'bot' | 'user';
 
@@ -51,28 +52,25 @@ export interface QuickAction {
 }
 
 @Component({
-  selector: 'app-chat-modal',
+  selector: 'lib-chat-modal',
+  standalone: true,
   templateUrl: './chat-modal.component.html',
   styleUrls: ['./chat-modal.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     MatIconModule,
-    MatTooltipModule,
     MatButtonModule,
     MatInputModule,
-    
+    MatTooltipModule,
+    MatMenuModule,
     MatSidenavModule,
     MatDialogModule,
-    FormsModule,
     OverlayModule,
-    MatMenuModule,
-    
-    WelcomeScreenComponent,
-    ChatFooterComponent,
-    HeaderComponent
-  ],
+    HeaderComponent,
+    ChatFooterComponent
+  ]
 })
 export class ChatModalComponent implements AfterViewChecked {
 
@@ -143,9 +141,6 @@ export class ChatModalComponent implements AfterViewChecked {
     } catch { }
   }
 
-  trackByMessageId(index: number, msg: ChatMessage) {
-    return msg.id;
-  }
 
   formatTimestamp(date: Date): string {
     const h = date.getHours(), m = date.getMinutes();
@@ -168,6 +163,7 @@ export class ChatModalComponent implements AfterViewChecked {
 
     if (this.awaitingApplicationNumber) {
       this.awaitingApplicationNumber = false;
+      this.handleApplicationNumber(text.trim(),this.lastSelectedModule);
       this.handleApplicationNumber(text.trim(), this.lastSelectedModule);
     }
   }
@@ -287,6 +283,7 @@ export class ChatModalComponent implements AfterViewChecked {
       return;
     }
     if (selected.title) {
+      this.downloadService.download(selected)      
       this.downloadService.download(selected)
       return;
     }
@@ -406,59 +403,62 @@ export class ChatModalComponent implements AfterViewChecked {
     }
   }
 
-  /* ADD BOT MESSAGE */
   addBotMessage(text: string) {
     this.messages = [...this.messages, this.createMessage(text, 'bot')];
     this.cdr.detectChanges();
   }
 
-  /* SERVICE FEEDBACK */
   onservicebuttonclick(ans: string) {
-    // Add user's message
-    this.messages.push(this.createMessage(ans, 'user'));
+    this.messages = [];
+    this.showmainmenu = true;
+    this.cdr.detectChanges();
+  }
 
-    // Hide buttons immediately
-    this.showButtons = false;
+  closeChat() {
+    this.messages = [];
+    this.showmainmenu = true;
+    this.drawer?.close();
+  }
 
-    // Wait for DOM to update before clearing chat
-    setTimeout(() => {
-      this.messages = [];
-      this.showmainmenu = true;
+  /* ───────────────── HEADER EVENTS ───────────────── */
 
-      // Force UI refresh if using OnPush
-      this.cdr.detectChanges();
-    }, 900);
+  onTranslateClick(): void {
+    // placeholder – logic handled in header if needed
+  }
+
+  onSettingsClick(): void {
+    // placeholder
+  }
+
+  onMinimizeClick(): void {
+    this.drawer?.close();
+  }
+
+  selectLanguage(lang: any): void {
+    console.log('Language selected:', lang);
+  }
+
+  onHeaderSettingSelected(setting: any): void {
+    if (setting?.label === 'Clear History') {
+      this.onClearHistory();
+    }
   }
 
 
-  /* HEADER EVENTS */
-  onTranslateClick() { }
-  onSettingsClick() { }
-  selectLanguage(lang: any) { console.log('Language selected:', lang); }
-  onHeaderSettingSelected(setting: any) {
-    if (setting?.label === 'Clear History') this.onClearHistory();
+
+  trackByMessageId(index: number, msg: ChatMessage): string {
+    return msg.id;
   }
 
-  onClearHistory() {
+  onClearHistory(): void {
     this.messages = [];
     this.showmainmenu = true;
     this.awaitingApplicationNumber = false;
-    this.subModules = [];
+    this.cdr.detectChanges();
   }
-
-  onMinimizeClick() { this.drawer?.close(); }
-  closeChat() { this.onClearHistory(); this.drawer?.close(); }
 
   openGIS(path: string) {
     window.open(`https://webgis2.mpbhulekh.gov.in/#/${path}`, '_blank');
-  }
-
-  onMessageClick(msg: ChatMessage) {
-    if (!msg.clickable) return;
-    msg.clickable = false;
-    this.sendMessage("Yes");
-    this.messages = [];
-    this.showmainmenu = true;
   }
 
 }
