@@ -29,13 +29,13 @@ import { WelcomeScreenComponent } from './welcome-screen/welcome-screen.componen
     MatTooltipModule,
     MatButtonModule,
     MatInputModule,
-    
+
     MatSidenavModule,
     MatDialogModule,
     FormsModule,
     OverlayModule,
     MatMenuModule,
-    
+
     WelcomeScreenComponent
   ],
   templateUrl: './app.component.html',
@@ -53,6 +53,7 @@ export class AppComponent {
   ) { }
 
   ngOnInit() {
+    this.tokenService.clearToken()
     this.apiSrvc.loginGuest().subscribe({
       next: (res) => {
         const token = res?.data?.access_token;
