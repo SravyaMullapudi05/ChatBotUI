@@ -35,11 +35,50 @@ export class WelcomeScreenComponent {
 
   @Input() drawer: MatSidenav | any;
   @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
+  selectedLanguage: string;
 
   // 🔥 This tells the parent to switch to chat component
 
   constructor() { }
+  ngOnInit(){
+    this.selectLanguage(this.languages[0].code)
+  }
   getstarted = false
+  welcomeActions = [
+    {
+      id: 1,
+      label: 'Check application status',
+      icon: 'task_alt'
+    },
+    {
+      id: 2,
+      label: 'Access services and FAQs',
+      icon: 'task_alt'
+    },
+    {
+      id: 3,
+      label: 'Download forms and documents',
+      icon: 'task_alt'
+    },
+    {
+      id: 4,
+      label: 'Get contact information',
+      icon: 'task_alt'
+    }
+  ];
+
+  languages = [
+    {
+      code: 'en',
+      label: 'English',
+      flag: '../assets/images/GB.png'
+    },
+    {
+      code: 'hi',
+      label: 'हिंदी',
+      flag: '../assets/images/IN.png'
+    }
+  ];
 
   getStarted() {
     this.getstarted = true
@@ -47,6 +86,12 @@ export class WelcomeScreenComponent {
 
   makeGetStartedFalse() {
     this.getstarted = false
+  }
+
+
+  selectLanguage(code: string) {
+    this.selectedLanguage = code
+    console.log(this.selectedLanguage)
   }
 
 }

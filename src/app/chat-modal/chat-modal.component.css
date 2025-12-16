@@ -33,6 +33,7 @@ app-header {
     background: #F8FAFC;
     /* Prevent header from scrolling into view */
     min-height: 0;
+    height: calc(100vh - 120px);
 }
 
 

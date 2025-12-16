@@ -1,32 +1,38 @@
 <div class="chat-modal">
 
   <!-- Header -->
-
-  <app-header (translateClick)="onTranslateClick()" (settingsClick)="onSettingsClick()"
-    (minimizeClick)="onMinimizeClick()" (closeClick)="closeChat()" (languageSelected)="selectLanguage($event)"
+  <app-header
+    (translateClick)="onTranslateClick()"
+    (settingsClick)="onSettingsClick()"
+    (minimizeClick)="onMinimizeClick()"
+    (closeClick)="closeChat()"
+    (languageSelected)="selectLanguage($event)"
     (settingsSelected)="onHeaderSettingSelected($event)">
   </app-header>
 
   <!-- Chat messages -->
-  <!-- #scrollContainer -->
-  <div class="chat-messages">
+  <div class="chat-messages" #scrollContainer>
 
+    <!-- Quick actions -->
     <div *ngIf="showmainmenu" class="quick-actions-in-chat">
-
       <div class="bot-combined-bubble w-80">
         <div class="bot-bubble-left me-2">
-          <img src="../assets/images/logo.png" width="24px" height="24px" class="mb-3" />
-          <!-- <mat-icon>smart_toy</mat-icon> -->
+          <img src="../assets/images/logo.png" width="24" height="24" />
         </div>
+
         <div>
           <div class="bot-bubble-content mb-3 w-100">
             <div class="bot-welcome-text">
-              Hello! Welcome to Bhulekha Assistant. How can I help you today? </div>
-
-
+              Hello! Welcome to Bhulekha Assistant. How can I help you today?
+            </div>
           </div>
+
           <div class="quick-action-buttons">
-            <button class="quick-action-btn" *ngFor="let action of quickActions" (click)="handleAction(action)"
+            <button
+              class="quick-action-btn"
+              *ngFor="let action of quickActions"
+              (click)="handleAction(action)"
+              [overlapTrigger]="false"
               [ngClass]="action.colorClass">
 
               <span class="btn-icon-wrap">
@@ -38,182 +44,137 @@
           </div>
         </div>
       </div>
-
     </div>
 
-    <!-- Normal messages -->
-    <span *ngFor="let message of messages; trackBy: trackByMessageId">
-      <div class="message-row" [ngClass]="{'bot-row': message.sender === 'bot', 'user-row': message.sender === 'user'}">
+    <!-- Messages -->
+    <ng-container *ngFor="let message of messages; trackBy: trackByMessageId">
 
-        <!-- bot icon -->
+      <div
+        class="message-row"
+        [ngClass]="{
+          'bot-row': message.sender === 'bot',
+          'user-row': message.sender === 'user'
+        }">
+
+        <!-- Bot avatar -->
         <div *ngIf="message.sender === 'bot'" class="message-avatar">
-          <img src="../assets/images/logo.png" width="24px" height="24px" class="mb-3" />
+          <img src="../assets/images/logo.png" width="24" height="24" />
         </div>
 
-        <div class="message-block" [ngClass]="{'w-80' : message.sender === 'bot'}">
-          <!-- user message -->
-          <div *ngIf="message.id != 'typing'" class="message-content " [ngClass]="{'bot-message w-80 mb-2': message.sender === 'bot',
-                         'user-message': message.sender === 'user',
-                         'button-like': message.sender === 'bot' && message.clickable}"
+        <div class="message-block" [ngClass]="{ 'w-80': message.sender === 'bot' }">
+
+          <!-- Text message -->
+          <div
+            *ngIf="message.id !== 'typing'"
+            class="message-content"
+            [ngClass]="{
+              'bot-message w-80 mb-2': message.sender === 'bot',
+              'user-message': message.sender === 'user',
+              'button-like': message.sender === 'bot' && message.clickable
+            }"
             (click)="onMessageClick(message)">
             {{ message.text }}
           </div>
 
-          <!-- Typing Animation -->
+          <!-- Typing -->
           <div *ngIf="message.id === 'typing'" class="typing-dots">
             <span></span><span></span><span></span>
           </div>
 
-          <!-- modules -->
-          <div class="module-buttons w-100" *ngIf="message.modules">
-            <button class="module-btn suggesstion d-flex justify-content-between" *ngFor="let m of message.modules"
+          <!-- Modules -->
+          <div class="module-buttons w-100" *ngIf="message.modules?.length">
+            <button
+              class="module-btn suggesstion d-flex justify-content-between"
+              *ngFor="let m of message.modules"
               (click)="moduleAction(m)">
-              {{ m.name }}<mat-icon>chevron_right</mat-icon>
+              {{ m.name }}
+              <mat-icon>chevron_right</mat-icon>
             </button>
           </div>
 
-          <!-- questions -->
-          <div class="module-buttons w-100 module-btn suggesstion mb-2" *ngFor="let q of message.questions">
-            <div class="d-flex justify-content-between">
-              <button class="noclass text-left" (click)="showAnsforFaq(message.questions,q)">
-                <span>{{ q.question || q.title }}</span>
-                <mat-icon *ngIf="!q.icon">
-                  {{ q.showanswer ? 'expand_less' : 'expand_more' }}
-                </mat-icon>
-                <mat-icon *ngIf="q.icon">arrow_downward</mat-icon>
-              </button>
+          <!-- Questions -->
+          <div *ngIf="message.questions?.length">
+            <div
+              class="module-buttons w-100 module-btn suggesstion mb-2"
+              *ngFor="let q of message.questions">
+
+              <div class="d-flex justify-content-between">
+                <button class="noclass text-left"
+                        (click)="showAnsforFaq(message.questions, q)">
+                  <span>{{ q.question || q.title }}</span>
+
+                  <mat-icon *ngIf="!q.icon">
+                    {{ q.showanswer ? 'expand_less' : 'expand_more' }}
+                  </mat-icon>
+
+                  <mat-icon *ngIf="q.icon">arrow_downward</mat-icon>
+                </button>
+              </div>
+
+              <div class="faq-answer" *ngIf="q.showanswer">
+                {{ q.answer }}
+              </div>
             </div>
-            <div class="faq-answer" *ngIf="q.showanswer"> {{ q.answer }}</div>
           </div>
 
-          <!-- buttons -->
-          <div class="feedback-buttons" *ngIf="message.buttons">
-            <button *ngFor="let btn of message.buttons" [class]="btn.class" (click)="btn.action()">
+          <!-- Buttons -->
+          <div class="feedback-buttons" *ngIf="message.buttons?.length">
+            <button
+              *ngFor="let btn of message.buttons"
+              [class]="btn.class"
+              (click)="btn.action()">
               {{ btn.label }}
             </button>
           </div>
 
-          <!-- STATUS CARD (Application and Grievance status) -->
-          <!-- <div *ngIf="message.statusData" class="status-wrapper">
-
-            <div class="status-card">
-
-              <div class="row-item">
-                <div class="label">Application number</div>
-                <div class="value big">{{ message.statusData.applicationNumber }}</div>
-              </div>
-              <div class="two-col">
-                <div>
-                  <div class="label">Designation</div>
-                  <div class="value">{{ message.statusData.designation || '-' }}</div>
-                </div>
-
-                <div>
-                  <div class="label">Date</div>
-                  <div class="value">
-                    {{ message.statusData.lastUpdated | date:'dd-MM-yyyy' }} <br>
-                    {{ message.statusData.lastUpdated | date:'hh:mm:ss a' }}
-                  </div>
-                </div>
-              </div>
-
-              <div class="row-item">
-                <div class="label">Status</div>
-                <div class="status-pill" [ngClass]="message.statusData.status?.toLowerCase()">
-                  {{ message.statusData.status }}
-                </div>
-              </div>
-
-            </div>
-
-          </div>  -->
-
+          <!-- Status card -->
           <div class="service-box mb-2 mt-2" *ngIf="message.statusData as item">
 
             <div class="details">
               <span>Application number</span>
-              <p class="mb-1">{{ item.applicationNumber }}</p>
+              <p>{{ item.applicationNumber }}</p>
             </div>
 
             <div class="d-flex justify-content-between">
-
               <div class="details">
                 <span>Designation</span>
-                <p class="mb-1">{{ item.designation }}</p>
+                <p>{{ item.designation }}</p>
               </div>
 
               <div class="details">
                 <span>Date</span>
-                <p class="d-grid mb-1">
-                  {{ item.date }}
+                <p class="d-grid">
+                  {{ item.lastUpdated }}
                   <span>{{ item.time }}</span>
                 </p>
               </div>
-
             </div>
 
             <div class="details d-inline-grid">
               <span>Status</span>
               <span [ngClass]="item.class">{{ item.status }}</span>
             </div>
-
           </div>
 
-
-          <!-- time -->
-          <div class="timestamp">{{ formatTimestamp(message.timestamp) }}</div>
-
+          <div class="timestamp">
+            {{ formatTimestamp(message.timestamp) }}
+          </div>
         </div>
 
-        <!-- user icon -->
+        <!-- User avatar -->
         <div *ngIf="message.sender === 'user'" class="message-user-avatar">
           <mat-icon>person</mat-icon>
         </div>
       </div>
 
-
-
-    </span>
-
-
-    <!-- <app-user-bot-messages [messages]="messages" (messageClicked)="onMessageClick($event)">
-    </app-user-bot-messages> -->
-
-    <!-- Application Status Module -->
-    <!-- <div *ngIf="showApplicationStatus" class="status-module-box">
-
-      <div class="bot-status-row d-flex w-80">
-        <div class="bot-status-avatar  me-2">
-          <img src="../assets/images/logo.png" width="24px" height="24px" class="mb-3" />
-        </div>
-        <div>
-          <div class="bot-status-msg bot-bubble-content w-100">
-            Please select the module for which you want to check the application status:
-          </div>
-          <div class="module-buttons w-100">
-            <button class="module-btn suggesstion" *ngFor="let m of subModules" (click)="selectStatusModule(m)">
-              {{ m }}
-            </button>
-          </div>
-        </div>
-      </div>
-
-
-
-    </div> -->
-
-    <!-- SERVICES MODULE -->
-    <!-- <div *ngIf="showServices">
-      <app-services-module [moduleName]="moduleName" [subModules]="subModules"
-        (moduleSelected)="selectStatusModule($event)" [Allmessages]="Allmessages">
-      </app-services-module>
-    </div> -->
+    </ng-container>
 
   </div>
 
-
-  <!-- footer/input -->
-  <app-chat-footer (sendMessageEvent)="sendMessage($event)" (emojiClickEvent)="onEmojiClick()">
+  <!-- Footer -->
+  <app-chat-footer
+    (sendMessageEvent)="sendMessage($event)"
+    (emojiClickEvent)="onEmojiClick()">
   </app-chat-footer>
 
 </div>

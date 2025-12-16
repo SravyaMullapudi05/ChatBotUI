@@ -110,3 +110,8 @@
     font-size: large;
     padding: 3px;
 }
+
+.lang-btn.active {
+    border: 1px solid #1a4fff;
+    background: #eef3ff;
+}
