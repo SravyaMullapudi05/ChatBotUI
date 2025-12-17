@@ -1,8 +1,22 @@
-import { Component, EventEmitter, Output, ElementRef, HostListener, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Output,
+  ViewChild
+} from '@angular/core';
 import { CommonModule, NgFor } from '@angular/common';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
-import { MatMenuTrigger, MatMenu, MatMenuItem, MatMenuModule } from '@angular/material/menu';
-import { MatButton, MatButtonModule, MatIconButton } from '@angular/material/button';
+import {
+  MatMenuTrigger,
+  MatMenu,
+  MatMenuItem,
+  MatMenuModule
+} from '@angular/material/menu';
+import {
+  MatButton,
+  MatButtonModule,
+  MatIconButton
+} from '@angular/material/button';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -18,33 +32,33 @@ import { UserBotMessagesComponent } from '../user-bot-messages/user-bot-messages
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
   standalone: true,
-  imports: [MatButton, MatMenuTrigger, MatIcon, MatMenu, NgFor, MatMenuItem, MatIconButton,
+  imports: [
+    MatButton,
+    MatMenuTrigger,
+    MatIcon,
+    MatMenu,
+    NgFor,
+    MatMenuItem,
+    MatIconButton,
     CommonModule,
     MatIconModule,
     MatTooltipModule,
     MatButtonModule,
     MatInputModule,
-    
     MatSidenavModule,
     MatDialogModule,
     FormsModule,
     OverlayModule,
     MatMenuModule,
     UserBotMessagesComponent,
-    ChatFooterComponent],
+    ChatFooterComponent
+  ]
 })
 export class HeaderComponent {
 
-  @ViewChild('langDropdown') langDropdown!: ElementRef;
-  @ViewChild('settingsDropdown') settingsDropdown!: ElementRef;
-
-  /* Header Buttons */
-  headerActions = [
-    { icon: 'translate', title: 'Translate' },
-    { icon: 'settings', title: 'Settings' },
-    { icon: 'remove', title: 'Minimize' },
-    { icon: 'close', title: 'Close' }
-  ];
+  /* ✅ MENU TRIGGERS (IMPORTANT) */
+  @ViewChild('langTrigger') langTrigger!: MatMenuTrigger;
+  @ViewChild('settingsTrigger') settingsTrigger!: MatMenuTrigger;
 
   /* Languages */
   languages = [
@@ -60,9 +74,6 @@ export class HeaderComponent {
     { id: 2, label: 'Sound Notifications' }
   ];
 
-  showLanguageMenu = false;
-  showSettingsMenu = false;
-
   /* OUTPUT EVENTS */
   @Output() translateClick = new EventEmitter<void>();
   @Output() settingsClick = new EventEmitter<void>();
@@ -71,15 +82,32 @@ export class HeaderComponent {
   @Output() languageSelected = new EventEmitter<any>();
   @Output() settingsSelected = new EventEmitter<any>();
 
-  /* Universal header actions */
+  /* LANGUAGE */
+  selectLanguage(lang: any) {
+    this.selectedLanguage = lang;
+    this.languageSelected.emit(lang);
+    this.langTrigger?.closeMenu();   // ✅ close overlay
+  }
+
+  /* SETTINGS */
+
+  selectSetting(item: any) {
+    this.settingsSelected.emit(item);
+    this.settingsTrigger?.closeMenu();
+  }
+  
+
+  /* ✅ SINGLE SOURCE OF TRUTH */
+  closeAllMenus() {
+    this.langTrigger?.closeMenu();
+    this.settingsTrigger?.closeMenu();
+  }
+
+  /* HEADER ACTIONS */
   onHeaderButton(icon: string) {
     if (icon === 'translate') {
-      this.showLanguageMenu = !this.showLanguageMenu;
-      this.showSettingsMenu = false;
       this.translateClick.emit();
     } else if (icon === 'settings') {
-      this.showSettingsMenu = !this.showSettingsMenu;
-      this.showLanguageMenu = false;
       this.settingsClick.emit();
     } else if (icon === 'remove') {
       this.closeAllMenus();
@@ -90,37 +118,14 @@ export class HeaderComponent {
     }
   }
 
-  selectLanguage(lang: any) {
-    this.selectedLanguage = lang;
-    this.languageSelected.emit(lang);
-    this.showLanguageMenu = false;
+  onMinimize() {
+    this.closeAllMenus();        // ✅ CLOSE LANGUAGE + SETTINGS
+    this.minimizeClick.emit();  // emit after closing
   }
 
-  selectSetting(item: any) {
-    this.settingsSelected.emit(item);
-    this.showSettingsMenu = false;
+  onClose() {
+    this.closeAllMenus();       // ✅ CLOSE LANGUAGE + SETTINGS
+    this.closeClick.emit();     // emit after closing
   }
 
-  closeAllMenus() {
-    this.showLanguageMenu = false;
-    this.showSettingsMenu = false;
-  }
-
-  /* CLOSE ONLY WHEN CLICK IS OUTSIDE */
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(evt: Event) {
-    const click = evt.target as HTMLElement;
-
-    // Close language dropdown if clicked outside
-    if (this.showLanguageMenu && this.langDropdown &&
-      !this.langDropdown.nativeElement.contains(click)) {
-      this.showLanguageMenu = false;
-    }
-
-    // Close settings dropdown if clicked outside
-    if (this.showSettingsMenu && this.settingsDropdown &&
-      !this.settingsDropdown.nativeElement.contains(click)) {
-      this.showSettingsMenu = false;
-    }
-  }
 }

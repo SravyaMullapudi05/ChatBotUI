@@ -35,6 +35,7 @@ export class StatusService {
             "file_path": "",
             "response_time_seconds": 0,
             "assignee_role_id": 0,
+            "time":"16:15:28"
           },
           {
             "transaction_id": 2400600000129,
@@ -54,6 +55,7 @@ export class StatusService {
             "file_path": "",
             "response_time_seconds": 32444,
             "assignee_role_id": 0,
+            "time":"16:15:28"
           },
           {
             "transaction_id": 2400600000129,
@@ -73,6 +75,7 @@ export class StatusService {
             "file_path": "",
             "response_time_seconds": 0,
             "assignee_role_id": 0,
+            "time":"16:15:28"
           },
           {
             "transaction_id": 2400600000129,
@@ -92,6 +95,7 @@ export class StatusService {
             "file_path": "",
             "response_time_seconds": 0,
             "assignee_role_id": 0,
+            "time":"16:15:28"
           }
         ],
         "encrypted": false,

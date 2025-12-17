@@ -63,6 +63,12 @@ export class AppComponent {
     });
   }
 
+  ngOnChanges(){
+    console.log(this.drawer)
+  }
+
+  showfab=true;
+
   openChat() {
     this.drawer.open();
   }

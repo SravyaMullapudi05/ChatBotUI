@@ -1,26 +1,20 @@
 <div class="chat-input">
     <div class="input-container">
-  
-      <div class="input-wrapper">
-        <textarea class="message-input"
-          placeholder="Type your message here..."
-          [(ngModel)]="newMessage"
-          rows="1"
-          (input)="autoResizeTextArea($event)"
-          (keydown.enter)="onEnterPress($event)">
+
+        <div class="input-wrapper">
+            <textarea class="message-input" placeholder="Type your message here..." [(ngModel)]="newMessage" rows="1" (input)="autoResizeTextArea($event)" (keydown.enter)="onEnterPress($event)">
         </textarea>
-  
-        <!-- <button mat-icon-button class="emoji-btn mt-4" (click)="onEmojiClick()">
+
+            <!-- <button mat-icon-button class="emoji-btn mt-4" (click)="onEmojiClick()">
           <mat-icon>mood</mat-icon>
         </button> -->
-      </div>
-  
-      <button mat-icon-button class="send-btn mt-4 tersary_btn" (click)="sendMessage()">
+        </div>
+
+        <button mat-icon-button [ngClass]="{  'send-btn mt-4 primary_btn w-auto': newMessage,  'send-btn mt-4 secondary_btn w-auto ': !newMessage}" (click)="sendMessage()">
         <mat-icon class="mat-btn">send</mat-icon>
       </button>
-  
+
     </div>
-  
+
     <div class="help-text mt-2">Type /help for assistance</div>
-  </div>
-  
+</div>

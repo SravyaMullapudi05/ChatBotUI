@@ -4,9 +4,9 @@
 
             <!-- MAIN CARD -->
             <div class=" mb-4 d-flex justify-content-center">
-                <img src="../assets/images/logo.png" width="50px" height="50px" class="mb-2" />
+                <img src="../assets/images/logo.png" width="50px" height="50px" class="mb-2 logo" />
                 <div class="px-3">
-                    <h2 class="">Bhulekh Portal</h2>
+                    <h3 class="">Bhulekh Portal</h3>
                     <p class="text-muted">Land Records Management System</p>
                 </div>
             </div>
@@ -18,8 +18,7 @@
                 <!-- Welcome Text -->
                 <h4 class="">Welcome to Bhulekh</h4>
                 <p class="text-muted mb-4 welcome-text">
-                    Access land records, check application status, and get assistance with our services. Our intelligent
-                    assistant is here to help you 24/7.
+                    Access land records, check application status, and get assistance with our services. Our intelligent assistant is here to help you 24/7.
                 </p>
 
                 <!-- Services Grid -->
@@ -70,13 +69,13 @@
 
     <mat-sidenav-content></mat-sidenav-content>
 
-    <mat-sidenav #drawer mode="over" position="end" class="chat-sidenav" [disableClose]="false">
+    <mat-sidenav #drawer mode="over" position="end" class="chat-sidenav" [disableClose]="true" (opened)="showfab = false"
+    (closed)="showfab = true">
         <app-welcome-screen [drawer]="drawer" class="welcome"></app-welcome-screen>
         <!-- <app-chat-modal [drawer]="drawer"></app-chat-modal> -->
     </mat-sidenav>
 
 </mat-sidenav-container>
-<button mat-fab class="chat-fab btn-whatsapp-pulse btn-whatsapp-pulse-border" (click)="openChat()"
-    matTooltip="This is a tooltip" matTooltipPosition="left">
+<button *ngIf="showfab" mat-fab class="chat-fab btn-whatsapp-pulse btn-whatsapp-pulse-border" (click)="openChat()" matTooltip="This is a tooltip" matTooltipPosition="left">
     <mat-icon class="chat-main-icon">chat_bubble_outline</mat-icon><span class="chat-notification">6</span>
 </button>

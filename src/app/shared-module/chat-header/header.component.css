@@ -43,7 +43,7 @@
 
 .chat-title {
     font-size: 24px;
-    font-weight: 500;
+    /* font-weight: 500; */
 }
 
 .chat-status {

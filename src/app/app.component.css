@@ -1,5 +1,6 @@
 /* Full background gradient */
-
+.logo{ width: 80px;
+height: 80px;}
 .page-background {
     min-height: 100vh;
     background: linear-gradient(to bottom, #e9f0ff, #e6edff 40%, #e3ebff);
@@ -268,7 +269,6 @@
     0% {
         box-shadow: 0 0 0 0 rgba(25, 155, 210, 0.5);
     }
-
     100% {
         box-shadow: 0 0 0 30px rgba(59, 183, 240, 0);
     }
@@ -293,15 +293,19 @@
 .chat-sidenav {
     margin-top: 20px;
     margin-bottom: 34px;
-    width: 410px;
+    width: 414px;
     max-width: 90vw;
     pointer-events: auto;
     /* background: #fff; */
     display: flex;
     flex-direction: column;
     border-left: 1px solid #ccc;
-    border-radius: var(--number-spacing-md);
-    height: 88vh;
+    border-radius: var(--number-spacing-md) !important;
+    height: 100vh;
+    z-index: 1000 !important;
+    overflow: hidden;
+    animation: slideIn 0.3s ease-out;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -414,11 +418,6 @@
     transition: opacity 0.3s ease-in-out;
 }
 
-.chat-sidenav {
-    z-index: 1000 !important;
-    /* keep chat above overlay */
-}
-
 .blur-area {
     filter: blur(6px);
     transition: filter 0.3s ease;
@@ -450,14 +449,8 @@
 }
 
 
-/* Chat drawer panel */
 
-.chat-sidenav {
-    /* width: 380px !important; */
-    overflow: hidden;
-    animation: slideIn 0.3s ease-out;
-    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.2);
-}
+/* Chat drawer panel */
 
 
 /* Slide animation */
@@ -466,7 +459,6 @@
     from {
         transform: translateX(100%);
     }
-
     to {
         transform: translateX(0);
     }

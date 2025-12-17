@@ -68,8 +68,8 @@ app-header {
 
 .message-avatar,
 .message-user-avatar {
-    width: 24px;
-    height: 24px;
+    width: 33px;
+    height: 33px;
     border-radius: 50%;
     /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12); */
     display: flex;
@@ -119,12 +119,12 @@ app-header {
 }
 
 .user-row .message-content {
-    background: linear-gradient(90deg, var(--surfacetint), var(--extendedcolors-oncustomcolor1container));
+    background: linear-gradient(90deg, var(--surfacetint), var(--onprimarycontainer));
     color: white;
     padding: 13px 18px;
     border-radius: 14px 0px 14px 14px;
     /* max-width: 85%; */
-    font-size: 15px;
+    font-size: var(--number-spacing-sm);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
@@ -195,13 +195,13 @@ app-header {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 12px 14px;
+    padding: 8px 14px;
     border-radius: 12px;
     border: 1px solid transparent;
     cursor: pointer;
     font-weight: 500;
     min-height: 70px;
-    /* EXACT HEIGHT FROM SCREENSHOT */
+    min-width: 138px;
 }
 
 
@@ -226,33 +226,33 @@ app-header {
 /* Pastel Buttons (unchanged) */
 
 .quick-action-btn.blue {
-    background: #D8E8FF;
-    border-color: #AFCBFF;
-    color: #003F8A;
+    background: var(--primarycontainer);
+    border-color: #A0CDFF;
+    color: var(--primary);
 }
 
 .quick-action-btn.blue:hover {
-    box-shadow: 0 0px 4px rgb(68 79 163 / 100%);
+    box-shadow: 0 0px 4px rgb(1, 100, 157 / 100%);
     border-color: #003F8A;
     animation: pulseShadow 4s infinite;
 }
 
 .quick-action-btn.purple {
-    background: #C9F1F4;
-    border-color: #B4ECEF;
-    color: #0F6B75;
+    background: var(--extendedcolors-customcolor3container);
+    border-color: var(--extendedcolors-oncustomcolor3container);
+    color: var(--extendedcolors-customcolor3);
 }
 
 .quick-action-btn.purple:hover {
-    box-shadow: 0 0px 4px rgb(25, 123, 136);
-    border-color: #0F6B75;
-    animation: pulseShadow1 4s infinite;
+    box-shadow: 0 0px 4px rgb(47, 98, 140);
+    border-color: #2F628C;
+    animation: pulseShadow4 4s infinite;
 }
 
 .quick-action-btn.green {
-    background: #E9F7E8;
-    border-color: #C9ECC6;
-    color: #2E7D32;
+    background: var(--extendedcolors-customcolor2container);
+    border-color: var(--extendedcolors-oncustomcolor2container);
+    color: var(--extendedcolors-customcolor2);
 }
 
 .quick-action-btn.green:hover {
@@ -262,21 +262,21 @@ app-header {
 }
 
 .quick-action-btn.teal {
-    background: #E7DEFF;
-    border-color: #c8b5fa;
-    color: #615690;
+    background: var(--extendedcolors-customcolor1container);
+    border-color: var(--extendedcolors-oncustomcolor1container);
+    color: var(--extendedcolors-customcolor1);
 }
 
 .quick-action-btn.teal:hover {
-    box-shadow: 0 0px 4px rgb(93, 25, 136);
-    border-color: #615690;
-    animation: pulseShadow4 4s infinite;
+    box-shadow: 0 0px 4px rgb(25, 123, 136);
+    border-color: #0F6B75;
+    animation: pulseShadow1 4s infinite;
 }
 
 .quick-action-btn.orange {
-    background: #FFE7D6;
-    border-color: #F9C9A7;
-    color: #B2601B;
+    background: var(--extendedcolors-customcolor5container);
+    border-color: var(--extendedcolors-customcolor5container);
+    color: var(--extendedcolors-customcolor5);
 }
 
 .quick-action-btn.orange:hover {
@@ -286,9 +286,9 @@ app-header {
 }
 
 .quick-action-btn.red {
-    background: #FFE4E3;
-    border-color: #F8B4B4;
-    color: #B32020;
+    background: var(--extendedcolors-customcolor4container);
+    border-color: var(--extendedcolors-oncustomcolor4container);
+    color: var(--extendedcolors-customcolor4);
 }
 
 .quick-action-btn.red:hover {
@@ -459,16 +459,34 @@ app-header {
     background: #ffffff;
     border-radius: 25px;
     padding: 12px 16px;
-    font-size: 14px;
+    font-size: var(--number-spacing-sm);
     line-height: 25px;
-    color: #333;
+    color: var(--scrim);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    max-width: 85%;
+    max-width: 90%;
     margin: 0px 0px;
     border: 1px solid var(--primary);
     display: block;
     width: 100%;
     text-align: left;
+    font-weight: 400;
+}
+
+.suggesstion1 {
+    background: #ffffff;
+    border-radius: 25px;
+
+    font-size: var(--number-spacing-sm);
+    line-height: 25px;
+    color: var(--scrim);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    max-width: 90%;
+    margin: 0px 0px;
+    border: 1px solid var(--primary);
+    display: block;
+    width: 100%;
+    text-align: left;
+    font-weight: 400;
 }
 
 
@@ -559,9 +577,9 @@ app-header {
     padding-top: 10px;
     border-top: 1px solid rgba(0, 0, 0, 0.15);
     font-size: 14px;
-    color: #444;
+    color: var(--scrim);
     line-height: 1.5;
-    text-align: left;
+    text-align: justify;
     width: 100%;
 }
 
@@ -571,6 +589,7 @@ app-header {
     /* adjust to your theme */
     margin-left: 8px;
 }
+
 
 /* status card */
 
@@ -659,4 +678,23 @@ app-header {
 
 .status-pill.rejected {
     background: #e53935;
+}
+
+.w-70px {
+    width: 60px;
+    height: 50px;
+}
+
+.icondrp {
+    background-color: var(--surface);
+}
+
+.ques {
+    padding: 12px 16px;
+    font-size: var(--number-spacing-sm);
+    line-height: 25px;
+    color: var(--scrim);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+     text-align: left;
+    font-weight: 400;
 }

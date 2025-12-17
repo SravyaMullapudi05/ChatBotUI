@@ -68,37 +68,46 @@
     --surfacecontainerhighest: #E0E2E8;
     --extendedcolors-customcolor1: #2F628C;
     --extendedcolors-oncustomcolor1: #FFFFFF;
-    --extendedcolors-customcolor1container: #CEE5FF;
-    --extendedcolors-oncustomcolor1container: #0278BB;
+    --extendedcolors-customcolor1container: #9CF1F4;
+    --extendedcolors-oncustomcolor1container: #80D4D7;
     --extendedcolors-customcolor2: #3F6836;
     --extendedcolors-oncustomcolor2: #FFFFFF;
     --extendedcolors-customcolor2container: #BFEFB0;
-    --extendedcolors-oncustomcolor2container: #275021;
+    --extendedcolors-oncustomcolor2container: #A4D396;
     --extendedcolors-customcolor3: #615690;
     --extendedcolors-oncustomcolor3: #FFFFFF;
     --extendedcolors-customcolor3container: #E7DEFF;
-    --extendedcolors-oncustomcolor3container: #493E76;
+    --extendedcolors-oncustomcolor3container: #CBBEFF;
     --extendedcolors-customcolor4: #904A42;
     --extendedcolors-oncustomcolor4: #FFFFFF;
     --extendedcolors-customcolor4container: #FFDAD5;
-    --extendedcolors-oncustomcolor4container: #73342C;
+    --extendedcolors-oncustomcolor4container: #FFB4AA;
     --extendedcolors-customcolor5: #865319;
     --extendedcolors-oncustomcolor5: #FFFFFF;
     --extendedcolors-customcolor5container: #FFDCBE;
     --extendedcolors-oncustomcolor5container: #6A3C01;
-    --number-spacing-xxs: 0.25rem;
-    --number-spacing-xs: 0.5rem;
-    --number-spacing-sm: 0.75rem;
+    --number-spacing-xxs: 0.625rem;
+    /* 10px */
+    --number-spacing-xs: 0.75rem;
+    /* 12px */
+    --number-spacing-sm: 0.875rem;
+    /* 14px */
     --number-spacing-md: 1rem;
-    --number-spacing-lg: 1.5rem;
-    --number-spacing-xl: 4rem;
-    --number-spacing-xxl: 8rem;
+    /* 16px */
+    --number-spacing-lg: 1.125rem;
+    /* 18px */
+    --number-spacing-xl: 1.25rem;
+    /* 20px */
+    --number-spacing-xxl: 1.5rem;
+    /* 24px */
+    --font-weight-medium: 500;
     --font-family: 'Poppins';
 }
 
 body {
     font-family: var(--font-family);
     background-color: #eaf2ff;
+    font-size: var( --number-spacing-sm);
 }
 
 
@@ -128,22 +137,29 @@ h3 {
     line-height: 1.5;
     color: var(--primary);
     font-family: var(--font-family);
+    font-size: 1.875rem;
 }
 
 h4 {
-    font-size: var(--text-base);
+    font-size: var(--number-spacing-xxl);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+}
+
+h5 {
+    font-size: var(--number-spacing-md);
     font-weight: var(--font-weight-medium);
     line-height: 1.5;
 }
 
 p {
-    font-size: var(--text-base);
+    font-size: var(--number-spacing-sm);
     font-weight: var(--font-weight-normal);
     line-height: 1.5;
 }
 
 label {
-    font-size: var(--text-base);
+    font-size: var(--number-spacing-sm);
     font-weight: var(--font-weight-medium);
     line-height: 1.5;
 }
@@ -248,13 +264,13 @@ body {
 
 .primary_btn {
     background-color: var(--primary);
-    border-radius: 12px;
-    padding: 12px 18px;
+    border-radius: var(--number-spacing-sm);
+    padding: var(--number-spacing-sm);
     border: none;
-    font-size: 15px;
+    font-size: var(--number-spacing-md);
     color: var(--onprimary);
     cursor: pointer;
-    text-align: left;
+    text-align: center;
 }
 
 .secondary_btn {
@@ -262,8 +278,8 @@ body {
     border-radius: var(--number-spacing-sm);
     padding: var(--number-spacing-sm);
     border: none;
-    font-size: 15px;
-    color: var(--scrim);
+    font-size: var(--number-spacing-sm);
+    color: var(--primary);
     cursor: pointer;
     text-align: left;
     border: 1px solid var(--primary);
@@ -272,11 +288,11 @@ body {
 }
 
 .tersary_btn {
-    background-color: var(--extendedcolors-customcolor1container);
+    /* background-color: var(--extendedcolors-customcolor1container); */
     border-radius: var(--number-spacing-sm);
     padding: var(--number-spacing-sm);
     border: none;
-    font-size: 15px;
+    font-size: var(--number-spacing-sm);
     color: var(--primary);
     cursor: pointer;
     text-align: left;
@@ -295,7 +311,7 @@ body {
 }
 
 .w-80 {
-    width: 80%;
+    width: 90%;
 }
 
 .w-64 {
@@ -312,7 +328,7 @@ body {
 }
 
 .details span {
-    font-size: x-small;
+    font-size: var(--number-spacing-xs);
 }
 
 .details p {
@@ -396,3 +412,12 @@ body {
     right: 110px !important;
     z-index: 9999 !important;
 } */
+
+.text-center {
+    text-align: center;
+}
+.cdk-overlay-container {
+    z-index: 3000 !important;
+        top: 80% !important;
+    left: 87% !important;
+}

@@ -1,20 +1,33 @@
 /* ------------------------------------------------------ */
+
+
 /* MESSAGE ROW (outer wrapper for each chat bubble)       */
+
+
 /* ------------------------------------------------------ */
+
 .message-row {
     display: flex;
     gap: 12px;
     margin-bottom: 14px;
 }
 
+
 /* Align user messages to right */
+
 .user-row {
     justify-content: flex-end;
 }
 
+
 /* ------------------------------------------------------ */
+
+
 /* AVATARS                                                */
+
+
 /* ------------------------------------------------------ */
+
 .message-avatar,
 .message-user-avatar {
     width: 24px;
@@ -29,27 +42,41 @@
     color: #1F4E79;
 }
 
+
 /* ------------------------------------------------------ */
+
+
 /* MESSAGE BLOCK WRAPPER                                  */
+
+
 /* ------------------------------------------------------ */
+
 .message-block {
     max-width: 80%;
     display: flex;
     flex-direction: column;
 }
 
+
 /* ------------------------------------------------------ */
+
+
 /* CORE MESSAGE BUBBLE                                    */
+
+
 /* ------------------------------------------------------ */
+
 .message-content {
     padding: 14px;
     border-radius: 14px;
-    font-size: 15px;
+    font-size: var(--number-spacing-sm);
     max-width: 100%;
     line-height: 1.4;
 }
 
+
 /* BOT bubble */
+
 .bot-message {
     background: var(--surface);
     border-radius: 0px 14px 14px 14px;
@@ -58,17 +85,21 @@
     overflow: auto;
 }
 
+
 /* USER bubble */
+
 .user-message {
     background: linear-gradient(90deg, var(--surfacetint), var(--extendedcolors-oncustomcolor1container));
     color: white;
     padding: 13px 18px;
     border-radius: 0px 14px 14px 0px;
-    font-size: 15px;
+    font-size: var(--number-spacing-sm);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
+
 /* BOT clickable messages */
+
 .button-like {
     border: 1px solid var(--primary);
     background: #ffffff;
@@ -82,9 +113,15 @@
     text-align: left;
 }
 
+
 /* ------------------------------------------------------ */
+
+
 /* TIMESTAMP                                              */
+
+
 /* ------------------------------------------------------ */
+
 .timestamp {
     font-size: 11px;
     color: #8895a7;

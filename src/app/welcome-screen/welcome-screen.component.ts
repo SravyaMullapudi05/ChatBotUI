@@ -1,6 +1,6 @@
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
-
+ 
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,9 +10,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
+ 
 import { ChatModalComponent } from '../chat-modal/chat-modal.component';
-
+ 
 @Component({
   selector: 'app-welcome-screen',
   templateUrl: './welcome-screen.component.html',
@@ -32,13 +32,13 @@ import { ChatModalComponent } from '../chat-modal/chat-modal.component';
     MatMenuModule],
 })
 export class WelcomeScreenComponent {
-
+ 
   @Input() drawer: MatSidenav | any;
   @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
   selectedLanguage: string;
-
+ 
   // 🔥 This tells the parent to switch to chat component
-
+ 
   constructor() { }
   ngOnInit(){
     this.selectLanguage(this.languages[0].code)
@@ -66,7 +66,7 @@ export class WelcomeScreenComponent {
       icon: 'task_alt'
     }
   ];
-
+ 
   languages = [
     {
       code: 'en',
@@ -79,19 +79,20 @@ export class WelcomeScreenComponent {
       flag: '../assets/images/IN.png'
     }
   ];
-
+ 
   getStarted() {
     this.getstarted = true
   }
-
+ 
   makeGetStartedFalse() {
     this.getstarted = false
   }
-
-
+ 
+ 
   selectLanguage(code: string) {
     this.selectedLanguage = code
     console.log(this.selectedLanguage)
   }
-
+ 
 }
+ 

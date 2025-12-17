@@ -1,7 +1,7 @@
 <div class="chat-modal" *ngIf="!getstarted">
     <div class="welcome-screen">
-
-        <img src="../assets/images/logo.png" width="40px" height="40px" class="mb-3" />
+<div class="d-flex justify-content-center">
+        <img src="../assets/images/logo.png" width="40px" height="40px" class="mb-3" /></div>
 
         <h2 class="welcome-title">Welcome to Bhulekh Assistant!</h2>
         <p class="welcome-subtitle">
@@ -15,7 +15,7 @@
                 <mat-icon class="icon-box">
                     {{ action.icon }}
                 </mat-icon>
-
+ 
                 {{ action.label }}
             </button>
         </div>
@@ -28,18 +28,17 @@
         </div>
 
         <div class="language-buttons">
-            <button class="lang-btn" *ngFor="let lang of languages"
-                (click)="selectLanguage(lang.code)"  [class.active]="selectedLanguage === lang.code">
+            <button class="lang-btn" *ngFor="let lang of languages" (click)="selectLanguage(lang.code)" [class.active]="selectedLanguage === lang.code">
                 <div>
                     <img [src]="lang.flag" width="20" height="13" class="mb-2" alt="{{ lang.label }}" />
                 </div>
-
+ 
                 {{ lang.label }}
             </button>
         </div>
 
 
-        <button class="secondary_btn" (click)="getStarted()" [disabled]="!selectedLanguage">
+        <button class="primary_btn w-100 text-center" (click)="getStarted()" [disabled]="!selectedLanguage">
             Get started
         </button>
 

@@ -8,11 +8,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
+ 
 import { HeaderComponent } from '../chat-header/header.component';
 import { UserBotMessagesComponent } from '../user-bot-messages/user-bot-messages.component';
 import { CommonModule } from '@angular/common';
-
+ 
 @Component({
   selector: 'app-chat-footer',
   templateUrl: './chat-footer.component.html',
@@ -24,7 +24,7 @@ import { CommonModule } from '@angular/common';
     MatTooltipModule,
     MatButtonModule,
     MatInputModule,
-    
+ 
     MatSidenavModule,
     MatDialogModule,
     OverlayModule,
@@ -34,30 +34,36 @@ import { CommonModule } from '@angular/common';
   ],
 })
 export class ChatFooterComponent {
-
+ 
   newMessage: string = '';
-
-  @Output() sendMessageEvent = new EventEmitter<string>();
+ 
+  @Output() sendMessageEvent = new EventEmitter<{
+    senttype: string;
+    text: string;
+  }>();
   @Output() emojiClickEvent = new EventEmitter<void>();
-
+ 
   sendMessage() {
     const msg = this.newMessage.trim();
     if (!msg) return;
-
-    this.sendMessageEvent.emit(msg);
+ 
+    this.sendMessageEvent.emit({
+      senttype: 'usersent',
+      text: msg
+    });
     this.newMessage = '';
   }
-
+ 
   onEmojiClick() {
     this.emojiClickEvent.emit();
   }
-
+ 
   autoResizeTextArea(event: Event): void {
     const textarea = event.target as HTMLTextAreaElement;
     textarea.style.height = 'auto';
     textarea.style.height = textarea.scrollHeight + 'px';
   }
-
+ 
   onEnterPress(event: KeyboardEvent): void {
     if (!event.shiftKey) {
       event.preventDefault();
@@ -65,3 +71,5 @@ export class ChatFooterComponent {
     }
   }
 }
+ 
+ 
