@@ -13,13 +13,16 @@ import { ApiInterceptor } from './core/interceptors/api.interceptor';
 
 bootstrapApplication(AppComponent, {
   providers: [
+    // ✅ Animations (Angular Material etc.)
     provideAnimations(),
+
+    // ✅ Standalone routing
     provideRouter(routes),
 
-    // ✅ Enable DI-based interceptors
+    // ✅ HttpClient with DI interceptors support
     provideHttpClient(withInterceptorsFromDi()),
 
-    // ✅ Register interceptor
+    // ✅ Register HTTP interceptor
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ApiInterceptor,

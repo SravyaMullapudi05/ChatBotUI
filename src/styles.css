@@ -107,7 +107,7 @@
 body {
     font-family: var(--font-family);
     background-color: #eaf2ff;
-    font-size: var( --number-spacing-sm);
+    font-size: var(--number-spacing-sm);
 }
 
 
@@ -188,6 +188,7 @@ html {
         opacity: 0;
         transform: translateY(4px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -199,6 +200,7 @@ html {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -245,6 +247,7 @@ body {
     border: 1px solid #d0e6f0;
     transition: 0.3s ease;
     cursor: pointer;
+
     &:hover {
         transform: translateY(-4px);
         border-color: #0d6efd;
@@ -264,7 +267,7 @@ body {
 
 .primary_btn {
     background-color: var(--primary);
-    border-radius: var(--number-spacing-sm);
+    border-radius: var(--number-spacing-xs);
     padding: var(--number-spacing-sm);
     border: none;
     font-size: var(--number-spacing-md);
@@ -275,7 +278,7 @@ body {
 
 .secondary_btn {
     background-color: transparent;
-    border-radius: var(--number-spacing-sm);
+    border-radius: var(--number-spacing-xs);
     padding: var(--number-spacing-sm);
     border: none;
     font-size: var(--number-spacing-sm);
@@ -289,7 +292,7 @@ body {
 
 .tersary_btn {
     /* background-color: var(--extendedcolors-customcolor1container); */
-    border-radius: var(--number-spacing-sm);
+    border-radius: var(--number-spacing-xs);
     padding: var(--number-spacing-sm);
     border: none;
     font-size: var(--number-spacing-sm);
@@ -305,10 +308,7 @@ body {
     background: transparent;
 }
 
-.material-icons {
-    font-size: 20px;
-    line-height: 20px;
-}
+
 
 .w-80 {
     width: 90%;
@@ -406,18 +406,137 @@ body {
 }
 
 
-/* .cdk-overlay-pane {
+.cdk-overlay-pane {
     position: absolute !important;
     top: 71px !important;
     right: 110px !important;
     z-index: 9999 !important;
-} */
+}
 
 .text-center {
     text-align: center;
 }
-.cdk-overlay-container {
-    z-index: 3000 !important;
-        top: 80% !important;
-    left: 87% !important;
+
+/* .cdk-overlay-container {
+        z-index: 3000 !important;
+    top: 80% !important;
+    left: 84% !important;
+    position: absolute;
+    background-color: var(--scrim);
+    color: var(--onprimary);
+    border-radius: 12px;
+    
+    padding: 6px 10px;
+ 
+} */
+
+/* .tooltip_wrapper
+.cdk-overlay-container::after{content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+  opacity: 0;
+  visibility: visible;}
+ 
+  .cdk-overlay_connected_position_bounding_box{
+opacity: 1;
+  } */
+.tooltip-arrow-down {
+    position: relative;
+}
+
+.tooltip-arrow-down::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: #616161 transparent transparent transparent;
+}
+
+.mat-mdc-tooltip {
+    max-width: none;
+}
+
+/* cdk-overlay-connected-position-bounding-box */
+.tooltip_wra {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1000;
+}
+
+.chat-tooltip {
+    background: #1f2937;
+    color: #fff;
+    font-size: 12px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    white-space: nowrap;
+    max-width: none;
+    position: relative;
+}
+
+.chat-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -6px;
+    transform: translateY(-50%);
+    border: 6px solid transparent;
+    border-left-color: #1f2937;
+}
+
+.mat-icon {
+    overflow: visible !important;
+}
+
+.material-icons {
+    font-size: 24px;
+    line-height: 24px;
+}
+
+.header-right .material-icons {
+    font-size: 16px;
+    line-height: 16px;
+    line-height: 22px;
+}
+
+.header-right {
+    display: flex !important;
+}
+
+.mat-mdc-menu-panel {
+    background: var(--onprimary) !important;
+    color: var(--primary);
+    border-radius: 4px;
+    border-radius: var(--number-spacing-xs) !important;
+    margin-top: 10px;
+    width: 92px !important;
+}
+
+.mat-mdc-menu-item {
+    min-height: 32px !important;
+    border-bottom: 1px solid var(--surface) !important;
+}
+
+
+
+.mat-drawer-backdrop.mat-drawer-shown {
+    background: rgba(0, 0, 0, 0.55) !important;
+    backdrop-filter: blur(4px);
+}
+
+.header-right .mat-mdc-icon-button .mat-mdc-button-touch-target {
+    width: 30px;
+}
+
+.mat-drawer-inner-container {
+    overflow: hidden !important;
 }

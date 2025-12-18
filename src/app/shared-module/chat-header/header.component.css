@@ -12,7 +12,7 @@
 
 .chat-header {
     background: var(--primary);
-    padding: 12px 16px;
+    padding: 8px 16px;
     color: white;
     display: flex;
     justify-content: space-between;
@@ -42,7 +42,7 @@
 }
 
 .chat-title {
-    font-size: 24px;
+    font-size: var(--number-spacing-xl);
     /* font-weight: 500; */
 }
 
@@ -84,7 +84,9 @@
     height: 36px;
     display: flex;
     align-items: center;
-    gap: 6px;
+    direction: rtl;
+    gap: 10px;
+    padding: 2px !important;
 }
 
 
@@ -136,5 +138,26 @@
 .no-class {
     background: transparent;
     color: #ffffff;
-    width: 20px;
+    /* width: 20px; */
+}
+
+.dir-r {
+    direction: ltr;
+}
+
+.lang-menu-panel {
+    background: var(--onprimary);
+    color: white !important;
+    border-radius: 4px;
+    padding: 4px 10px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    direction: rtl;
+    gap: 10px;
+    padding: 2px !important;
+}
+
+.w-20px {
+    width: 25px;
 }

@@ -35,6 +35,8 @@ export class WelcomeScreenComponent {
  
   @Input() drawer: MatSidenav | any;
   @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
+  @Output() showChatModal = new EventEmitter<boolean>();
+
   selectedLanguage: string;
  
   // 🔥 This tells the parent to switch to chat component
@@ -82,11 +84,12 @@ export class WelcomeScreenComponent {
  
   getStarted() {
     this.getstarted = true
+    this.showChatModal.emit(true)
   }
  
-  makeGetStartedFalse() {
-    this.getstarted = false
-  }
+  // makeGetStartedFalse() {
+  //   this.getstarted = false
+  // }
  
  
   selectLanguage(code: string) {

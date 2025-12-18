@@ -1,0 +1,102 @@
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+
+            <!-- MAIN CARD -->
+            <div class=" mb-4 d-flex justify-content-center">
+                <img src="../assets/images/logo.png" width="50px" height="50px" class="mb-2 logo" />
+                <div class="px-3">
+                    <h3 class="">Bhulekh Portal</h3>
+                    <p class="text-muted">Land Records Management System</p>
+                </div>
+            </div>
+            <div class="main-card mx-auto">
+
+                <!-- Logo + Title -->
+
+
+                <!-- Welcome Text -->
+                <h4 class="">Welcome to Bhulekh</h4>
+                <p class="text-muted mb-4 welcome-text">
+                    Access land records, check application status, and get assistance with our services. Our intelligent
+                    assistant is here to help you 24/7.
+                </p>
+
+                <!-- Services Grid -->
+                <div class="row g-4">
+
+                    <!-- Land Records -->
+                    <div class="col-md-4">
+                        <div class="service-box">
+                            <div class="service-icon">
+                                <mat-icon>list_alt_check</mat-icon>
+                            </div>
+                            <h5 class="">Land Records</h5>
+                            <p class="text-muted mb-0">View and download your property records</p>
+                        </div>
+                    </div>
+
+                    <!-- Services -->
+                    <div class="col-md-4">
+                        <div class="service-box">
+                            <div class="service-icon">
+                                <mat-icon>settings</mat-icon>
+                            </div>
+                            <h5 class="">Services</h5>
+                            <p class="text-muted mb-0">Apply for various land-related services</p>
+                        </div>
+                    </div>
+
+                    <!-- Help & Support -->
+                    <div class="col-md-4">
+                        <div class="service-box">
+                            <div class="service-icon">
+                                <mat-icon>info</mat-icon>
+                            </div>
+                            <h5 class="">Help & Support</h5>
+                            <p class="text-muted mb-0">Get help through our chatbot assistant</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<mat-sidenav-container [hasBackdrop]="true" class="chat-container" (backdropClick)="drawer.close()">
+
+    <mat-sidenav-content></mat-sidenav-content>
+
+    <mat-sidenav #drawer mode="over" position="end" class="chat-sidenav" [disableClose]="false"
+        (opened)="showfab = false" (closed)="showfab = true">
+        <app-welcome-screen *ngIf="showWelcomeScreen" [drawer]="drawer" class="welcome"
+            (showChatModal)="showChatModal($event)"></app-welcome-screen>
+        <app-chat-modal *ngIf="!showWelcomeScreen" [drawer]="drawer"  (closeChatEvent)="makeGetStartedFalse()"></app-chat-modal>
+    </mat-sidenav>
+
+</mat-sidenav-container>
+<!-- <div class="tooltip_wra">
+<button mat-fab class="chat-fab btn-whatsapp-pulse btn-whatsapp-pulse-border" (click)="openChat()" matTooltip="This is a tooltip" matTooltipPosition="left">
+    <mat-icon class="chat-main-icon">chat_bubble_outline</mat-icon><span class="chat-notification">6</span>
+</button>
+</div> -->
+<div *ngIf="showfab" class="chat-fab-wrapper" (mouseenter)="showTooltip = true" (mouseleave)="showTooltip = false"
+    (click)="openChat()">
+
+
+    <!-- <button *ngIf="showfab" mat-fab class="chat-fab btn-whatsapp-pulse btn-whatsapp-pulse-border" (click)="openChat()" matTooltip="This is a tooltip" matTooltipPosition="left">
+    <mat-icon class="chat-main-icon">chat_bubble_outline</mat-icon><span class="chat-notification">6</span>
+</button> -->
+
+    <button mat-fab class="chat-fab btn-whatsapp-pulse btn-whatsapp-pulse-border">
+        <mat-icon class="chat-main-icon">chat_bubble_outline</mat-icon>
+        <span class="chat-notification">6</span>
+    </button>
+
+    <div class="chat-tooltip" [class.show]="showTooltip">
+        Chat with us
+    </div>
+</div>

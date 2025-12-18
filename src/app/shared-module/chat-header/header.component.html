@@ -20,55 +20,52 @@
   <div class="header-right d-flex">
 
     <!-- LANGUAGE DROPDOWN BUTTON (mat-menu trigger) -->
-    <button mat-button class="lang-btn d-flex" [matMenuTriggerFor]="langMenu" #langTrigger="matMenuTrigger">
-      <img [src]="selectedLanguage.flag" class="lang-flag">
-      <span>{{ selectedLanguage.code.toUpperCase() }}</span>
+    <button mat-button class="lang-btn d-flex px-0 mx-0 " [matMenuTriggerFor]="langMenu" #langTrigger="matMenuTrigger"
+    (menuOpened)="onLanguageMenuOpened()">
+      <div class="d-flex dir-r">
+        <div class="px-1 py-1"><img [src]="selectedLanguage.flag" class="lang-flag"></div>
+        <div><span>{{ selectedLanguage.code.toUpperCase() }}</span></div>
+      </div>
       <mat-icon>expand_more</mat-icon>
     </button>
 
     <!-- MATERIAL MENU: LANGUAGES -->
     <mat-menu #langMenu="matMenu" class="lang-menu-panel">
       <button mat-menu-item *ngFor="let lang of languages" (click)="selectLanguage(lang)">
-
-        <img [src]="lang.flag">
-        <span>{{ lang.code.toUpperCase() }} — {{ lang.label }}</span>
+        <div class="d-flex dir-r">
+          <div class="px-3 py-1"><img [src]="lang.flag"></div>
+          <div><span>{{ lang.code.toUpperCase() }} </span></div>
+          <!-- <div><span>{{ lang.code.toUpperCase() }} — {{ lang.label }}</span></div>  -->
+        </div>
       </button>
     </mat-menu>
 
     <!-- SETTINGS BUTTON + MENU -->
-    <button
-    mat-icon-button
-    [matMenuTriggerFor]="settingsMenu"
-    #settingsTrigger="matMenuTrigger"
-    class="no-class">
-    <mat-icon>settings</mat-icon>
-  </button>
-  
-  <mat-menu #settingsMenu="matMenu" class="settings-menu-panel">
-  
-    <!-- ✅ NON CLICKABLE TITLE -->
-    <button mat-menu-item disabled class="settings-title">
-      Chat Settings
+    <button mat-icon-button [matMenuTriggerFor]="settingsMenu" #settingsTrigger="matMenuTrigger"
+      class="no-class px-0 mx-0 w-20px"   (menuOpened)="onSettingsMenuOpened()">
+      <mat-icon>settings</mat-icon>
     </button>
-  
-    <!-- ✅ REAL ACTIONS -->
-    <button
-      mat-menu-item
-      *ngFor="let opt of settingsOptions"
-      (click)="selectSetting(opt)">
-      {{ opt.label }}
-    </button>
-  
-  </mat-menu>
-  
-    
+
+    <mat-menu #settingsMenu="matMenu" class="settings-menu-panel">
+
+      <!-- ✅ NON CLICKABLE TITLE -->
+      <button mat-menu-item disabled class="settings-title ">
+        Chat Settings
+      </button>
+
+      <!-- ✅ REAL ACTIONS -->
+      <button mat-menu-item *ngFor="let opt of settingsOptions" (click)="selectSetting(opt)">
+        {{ opt.label }}
+      </button>
+
+    </mat-menu>
 
 
-    <button mat-icon-button (click)="onMinimize()" class="no-class">
+    <button mat-icon-button (click)="onMinimize()" class="no-class w-20px">
       <mat-icon>remove</mat-icon>
     </button>
 
-    <button mat-icon-button (click)="onClose()" class="no-class">
+    <button mat-icon-button (click)="onClose()" class="no-class w-20px px-2">
       <mat-icon>close</mat-icon>
     </button>
 

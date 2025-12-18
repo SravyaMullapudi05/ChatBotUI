@@ -52,7 +52,7 @@
 
 .primary_btn {
     background-color: var(--primary);
-   border-radius: var(--number-spacing-sm);
+   border-radius: var(--number-spacing-xs);
     /* padding: var(--number-spacing-sm); */
     border: none;
     font-size: var(--number-spacing-md);
@@ -63,11 +63,12 @@
         margin-top: 25px;
     text-align: center;
     width: 50px !important;
+        padding: 10px;
 }
 
 .secondary_btn {
     background-color: transparent;
-    border-radius: var(--number-spacing-sm);
+   border-radius: var(--number-spacing-xs);
     /* padding: var(--number-spacing-sm); */
     border: none;
     font-size: var(--number-spacing-md);
@@ -78,11 +79,12 @@
     width: -webkit-fill-available;
     text-align: center;
     width: 50px !important;
+        padding: 10px;
 }
 
 .tersary_btn {
     background-color: var(--extendedcolors-customcolor1container);
-    border-radius: var(--number-spacing-sm);
+    border-radius: var(--number-spacing-xs);
     padding: var(--number-spacing-sm);
     border: none;
     font-size: var(--number-spacing-md);
@@ -92,6 +94,7 @@
     border: 1px solid var(--primary);
     text-align: center;
     width: 50px !important;
+        padding: 10px;
 }
 
 .tersary_btn:hover {

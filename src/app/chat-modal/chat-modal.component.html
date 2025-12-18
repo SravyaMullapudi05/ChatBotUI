@@ -6,16 +6,15 @@
     (minimizeClick)="onMinimizeClick()" (closeClick)="closeChat()" (languageSelected)="selectLanguage($event)"
     (settingsSelected)="onHeaderSettingSelected($event)">
   </app-header>
-
   <!-- Chat messages -->
   <!-- #scrollContainer -->
   <div class="chat-messages" #scrollContainer>
 
     <div *ngIf="showmainmenu" class="quick-actions-in-chat">
 
-      <div class="bot-combined-bubble w-80">
-        <div class="bot-bubble-left me-2">
-          <img src="../assets/images/logo.png" width="24px" height="24px" class="mb-3" />
+      <div class="bot-combined-bubble">
+        <div class="message-avatar ">
+          <img src="../../assets/images/logo.png" width="24px" height="24px" class="mb-3" />
           <!-- <mat-icon>smart_toy</mat-icon> -->
         </div>
         <div>
@@ -64,6 +63,26 @@
             <span></span><span></span><span></span>
           </div>
 
+          <!-- CONTACT US CARD -->
+          <div *ngIf="message.contactData" class="contact-card">
+
+            <div *ngFor="let item of message.contactData" class="contact-row">
+
+              <!-- Header -->
+              <h4 *ngIf="item.header" class="contact-header">
+                {{ item.header }}
+              </h4>
+
+              <!-- Icon + Text -->
+              <div *ngIf="item.text" class="contact-item">
+                <mat-icon *ngIf="item.icon">{{ item.icon }}</mat-icon>
+                <span class="contact-text">{{ item.text }}</span>
+              </div>
+
+            </div>
+
+          </div>
+
           <!-- modules -->
           <div class="module-buttons w-100" *ngIf="message.modules">
             <button class="module-btn suggesstion d-flex justify-content-between" *ngFor="let m of message.modules"
@@ -90,6 +109,7 @@
             </div>
             <div class="faq-answer p-2" *ngIf="q.showanswer"> {{ q.answer }}</div>
           </div>
+
           <!-- buttons -->
           <div class="feedback-buttons" *ngIf="message.buttons">
             <button *ngFor="let btn of message.buttons" [class]="btn.class" (click)="btn.action()" class="w-70px">
@@ -165,7 +185,21 @@
 
 
           <!-- time -->
-          <div class="timestamp">{{ formatTimestamp(message.timestamp) }}</div>
+          <!-- <div class="timestamp">{{ formatTimestamp(message.timestamp) }}</div> -->
+
+          <!-- new -->
+          <!-- time + feedback -->
+          <div class="timestamp-row" *ngIf="message.sender === 'bot'">
+            <span class="timestamp-text">
+              {{ formatTimestamp(message.timestamp) }}
+            </span>
+
+            <span class="feedback-icons" *ngIf="showicons">
+              <mat-icon (click)="onFeedback('up', message)">thumb_up</mat-icon>
+              <mat-icon (click)="onFeedback('down', message)">thumb_down</mat-icon>
+            </span>
+          </div>
+
 
         </div>
 

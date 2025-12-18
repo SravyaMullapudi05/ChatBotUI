@@ -28,8 +28,15 @@ import { WelcomeScreenComponent } from '../welcome-screen/welcome-screen.compone
 import { ChatFooterComponent } from '../shared-module/chat-footer/chat-footer.component';
 import { HeaderComponent } from '../shared-module/chat-header/header.component';
 import { ConnecttobotService } from '../services/connecttobot.service';
+import { Router } from '@angular/router';
 
 type Sender = 'bot' | 'user';
+
+export interface ContactItem {
+  icon?: string;
+  header?: string;
+  text?: string;
+}
 
 export interface ChatMessage {
   id: string;
@@ -41,6 +48,8 @@ export interface ChatMessage {
   buttons?: any[];
   questions?: any[];
   statusData?: any;
+  contactData?: ContactItem[];
+  showicons?: Boolean;
   [key: string]: any;
 }
 
@@ -131,7 +140,7 @@ export class ChatModalComponent implements AfterViewChecked {
   fqaQuestions: any[] = [];
   downloadModules: any[] = [];
   downloadSubmodules: any[] = [];
-  botResponse: BotSuggestion[] = [];
+  botResponse: any;
   awaitingBotResponse: boolean;
 
   constructor(
@@ -139,7 +148,8 @@ export class ChatModalComponent implements AfterViewChecked {
     private faqService: FaqsService,
     private statusService: StatusService,
     private downloadService: DownloadsService,
-    private ConnectToBotservice: ConnecttobotService
+    private ConnectToBotservice: ConnecttobotService,
+    private router: Router
   ) { }
 
   /* ───────── AUTO SCROLL ───────── */
@@ -167,7 +177,7 @@ export class ChatModalComponent implements AfterViewChecked {
     this.updateUI();
   }
 
-  trackByMessageId(_: number, msg: ChatMessage) {
+  trackByMessageId(index: number, msg: ChatMessage) {
     return msg.id;
   }
 
@@ -197,10 +207,23 @@ export class ChatModalComponent implements AfterViewChecked {
       this.ConnectToBotservice.connectToBot(text).subscribe({
         next: (res) => {
           this.botResponse = res.data
-          if (this.botResponse) {
+          if (this.botResponse && this.botResponse.length > 1) {
             qshn = 'Do you mean to say?'
+            this.hideTyping([
+              {
+                ...this.createMessage('contact', 'Contact Us', 'bot'),
+                showicons: true
+              },
+              this.createMessage('contact', 'Are you satisfied?', 'bot', undefined, [
+                { label: 'Yes', class: 'primary_btn', action: () => this.onservicebuttonclick('contact', 'yes') },
+                { label: 'No', class: 'tersary_btn', action: () => this.onservicebuttonclick('contact', 'no') }
+              ])
+            ]);
+
+          } else {
+            qshn = this.botResponse[0].name
+            this.hideTyping(this.createMessage('botConnection', qshn, 'bot'));
           }
-          this.hideTyping(this.createMessage('botConnection', qshn, 'bot', this.botResponse));
         },
         error: () => {
           this.hideTyping([]);
@@ -234,12 +257,24 @@ export class ChatModalComponent implements AfterViewChecked {
 
     this.messages = [];
     this.sendMessage('userclick', action.label);
-    this.showTyping('bot');
+    // this.showTyping('bot')
 
-    if (action.id === 'status') return this.loadStatusModule();
-    if (action.id === 'services') return this.loadServiceModule();
-    if (action.id === 'faqs') return this.loadFaqModule();
-    if (action.id === 'downloads') return this.loadDownloadsModule();
+    if (action.id === 'status') {
+      this.showTyping('bot')
+      return this.loadStatusModule()
+    };
+    if (action.id === 'services') {
+      this.showTyping('bot')
+      return this.loadServiceModule()
+    };
+    if (action.id === 'faqs') {
+      return this.loadFaqModule()
+    };
+    if (action.id === 'downloads') {
+      this.showTyping('bot')
+      return this.loadDownloadsModule()
+    };
+    if (action.id === 'contact') return this.contactUs();
   }
 
   private loadStatusModule() {
@@ -263,6 +298,49 @@ export class ChatModalComponent implements AfterViewChecked {
       this.showmainmenu = false;
     }, 600);
   }
+
+  private contactUs() {
+    this.showmainmenu = false;
+    this.messages = []
+    this.showTyping('bot')
+    const contactusData: ContactItem[] = [
+      {
+        header: `The Commissioner of Land Records
+  (Govt. of Madhya Pradesh)`
+      },
+      {
+        icon: 'location_on',
+        text: `Rajaswa Bhawan, Naka Chandrabadni,
+  Neemdam Road,
+  Gwalior (Madhya Pradesh)
+  Pincode: 474009`
+      },
+      {
+        icon: 'call',
+        text: `18002030311 (Toll Free)
+  0751-2441200 (Landline – CLR Office Gwalior)`
+      },
+      {
+        icon: 'email',
+        text: `clrgwa@mp.nic.in`
+      }
+    ];
+
+    setTimeout(() => {
+      this.hideTyping([
+        {
+          ...this.createMessage('contact', 'Contact Us', 'bot'),
+          contactData: contactusData
+        },
+        this.createMessage('contact', 'Are you satisfied?', 'bot', undefined, [
+          { label: 'Yes', class: 'primary_btn', action: () => this.onservicebuttonclick('contact', 'yes') },
+          { label: 'No', class: 'tersary_btn', action: () => this.onservicebuttonclick('contact', 'no') }
+        ])
+      ]);
+      this.showmainmenu = false;
+    }, 600);
+  }
+
 
   private loadDownloadsModule() {
     this.downloadModules = this.downloadService.getAlldownloads();
@@ -388,6 +466,9 @@ export class ChatModalComponent implements AfterViewChecked {
     setTimeout(() => {
       this.messages = [];
       this.showmainmenu = true;
+      if (ans === 'no' && moduleselected != 'contact') {
+        this.contactUs()
+      }
       this.cdr.detectChanges();
     }, 900);
   }
@@ -401,7 +482,7 @@ export class ChatModalComponent implements AfterViewChecked {
       this.onClearHistory();
     }
   }
-  
+
   onClearHistory() {
     this.messages = [];
     this.showmainmenu = true;
@@ -478,12 +559,13 @@ export class ChatModalComponent implements AfterViewChecked {
       //     this.hideTyping([]);
       //   }
       // });
-      this.sendMessage('usersent', module.name, 'Do you mean to say?');
-
       this.showTyping('bot');
-
-
+      setTimeout(() => this.sendMessage('usersent', module.name), 600)
     }
   }
 
+  makeGetStartedFalse() {
+  }
+
 }
+
