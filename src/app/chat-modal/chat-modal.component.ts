@@ -19,26 +19,26 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
+ 
 import { FaqsService } from '../services/faqs.service';
 import { StatusService } from '../services/status.service';
 import { DownloadsService } from '../services/downloads.service';
-
+ 
 import { WelcomeScreenComponent } from '../welcome-screen/welcome-screen.component';
 import { ChatFooterComponent } from '../shared-module/chat-footer/chat-footer.component';
 import { HeaderComponent } from '../shared-module/chat-header/header.component';
 import { ConnecttobotService } from '../services/connecttobot.service';
 import { Router } from '@angular/router';
 import { BotMessageFeedbackComponent } from '../shared-module/bot-message-feedback/bot-message-feedback.component';
-
+ 
 type Sender = 'bot' | 'user';
-
+ 
 export interface ContactItem {
   icon?: string;
   header?: string;
   text?: string;
 }
-
+ 
 export interface ChatMessage {
   id: string;
   text: string;
@@ -53,20 +53,20 @@ export interface ChatMessage {
   showicons?: Boolean;
   [key: string]: any;
 }
-
+ 
 export interface QuickAction {
   id: string;
   label: string;
   icon: string;
   colorClass: string;
 }
-
+ 
 export interface BotSuggestion {
   id: number;
   name: string;
   items?: []
 }
-
+ 
 @Component({
   selector: 'app-chat-modal',
   standalone: true,
@@ -91,11 +91,11 @@ export interface BotSuggestion {
   ]
 })
 export class ChatModalComponent implements AfterViewChecked {
-
+ 
   @Input() drawer!: MatSidenav;
   @ViewChild('scrollContainer') scrollContainer!: ElementRef;
   @Output() closeChatEvent = new EventEmitter<void>();
-
+ 
   messages: ChatMessage[] = [];
   showmainmenu = true;
   awaitingApplicationNumber = false;
@@ -103,15 +103,15 @@ export class ChatModalComponent implements AfterViewChecked {
   lastSelectedModule = '';
   subModules: any[] = [];
   showButtons = false;
-
+ 
   typingMessage: ChatMessage = {
     id: 'typing',
     text: '',
     sender: 'bot',
     timestamp: new Date()
   };
-
-
+ 
+ 
   /* QUICK ACTIONS */
   quickActions: QuickAction[] = [
     { id: 'status', label: 'Application', icon: 'description', colorClass: 'blue' },
@@ -121,13 +121,13 @@ export class ChatModalComponent implements AfterViewChecked {
     { id: 'contact', label: 'Contact', icon: 'call', colorClass: 'purple' },
     { id: 'end', label: 'End Chat', icon: 'cancel', colorClass: 'red' }
   ];
-
-
+ 
+ 
   applicationModules = [
     { id: 1, name: 'Application Status', action: () => this.selectStatusModule('Application Status') },
     { id: 2, name: 'Grievance Status', action: () => this.selectStatusModule('Grievance Status') }
   ];
-
+ 
   serviceModules = [
     { id: 1, name: 'Transaction Details', action: () => this.openGIS('home/transaction-details') },
     { id: 2, name: 'Re-assessment (Diversion)', action: () => this.openGIS('user-management/signin') },
@@ -137,14 +137,14 @@ export class ChatModalComponent implements AfterViewChecked {
     { id: 6, name: 'Land Mortgage', action: () => this.openGIS('home') },
     { id: 7, name: 'Village Map Purchase', action: () => window.open('https://geoportal.mp.gov.in/khasraservice/uLogin.aspx', '_blank') }
   ];
-
+ 
   faqModules: any[] = [];
   fqaQuestions: any[] = [];
   downloadModules: any[] = [];
   downloadSubmodules: any[] = [];
   botResponse: any;
   awaitingBotResponse: boolean;
-
+ 
   constructor(
     private cdr: ChangeDetectorRef,
     private faqService: FaqsService,
@@ -153,12 +153,12 @@ export class ChatModalComponent implements AfterViewChecked {
     private ConnectToBotservice: ConnecttobotService,
     private router: Router
   ) { }
-
+ 
   /* ───────── AUTO SCROLL ───────── */
   ngAfterViewChecked() {
     this.scrollToBottom();
   }
-
+ 
   private scrollToBottom() {
     if (!this.scrollContainer) return;
     try {
@@ -166,41 +166,41 @@ export class ChatModalComponent implements AfterViewChecked {
       el.scrollTop = el.scrollHeight;
     } catch { }
   }
-
+ 
   private updateUI() {
     setTimeout(() => this.scrollToBottom(), 0);
     this.cdr.detectChanges();
   }
-
+ 
   private pushMessages(msgs: ChatMessage | ChatMessage[]) {
     this.messages = Array.isArray(msgs)
       ? [...this.messages, ...msgs]
       : [...this.messages, msgs];
     this.updateUI();
   }
-
+ 
   trackByMessageId(index: number, msg: ChatMessage) {
     return msg.id;
   }
-
+ 
   formatTimestamp(date: Date): string {
     const h = date.getHours(), m = date.getMinutes();
     return `${h % 12 || 12}:${m < 10 ? '0' + m : m} ${h >= 12 ? 'PM' : 'AM'}`;
   }
-
+ 
   /* ───────── FOOTER SEND ───────── */
   sendMessage(senttype: string, text?: string, qshn?: string) {
     if (!text?.trim()) return;
-
+ 
     const msg: ChatMessage = {
       id: Date.now().toString(),
       text: text.trim(),
       sender: 'user',
       timestamp: new Date()
     };
-
+ 
     this.pushMessages(msg);
-
+ 
     if (this.awaitingApplicationNumber) {
       this.awaitingApplicationNumber = false;
       this.handleApplicationNumber(text.trim(), this.lastSelectedModule);
@@ -222,7 +222,7 @@ export class ChatModalComponent implements AfterViewChecked {
                 { label: 'No', class: 'tersary_btn', action: () => this.onservicebuttonclick('contact', 'no') }
               ])
             ]);
-
+ 
           } else {
             qshn = this.botResponse[0].name
             this.hideTyping({
@@ -234,14 +234,14 @@ export class ChatModalComponent implements AfterViewChecked {
           this.hideTyping([]);
         }
       });
-
+ 
       // setTimeout(() => {
       //   this.hideTyping(this.createMessage('botConnection', 'Do you mean to say?', 'bot', this.botResponse));
       //   this.showmainmenu = false;
       // }, 600);
     }
   }
-
+ 
   /* ───────── TYPING ───────── */
   showTyping(sender: Sender) {
     this.typingMessage.sender = sender;
@@ -249,21 +249,21 @@ export class ChatModalComponent implements AfterViewChecked {
       this.pushMessages(this.typingMessage);
     }
   }
-
+ 
   hideTyping(newMsgs: ChatMessage | ChatMessage[]) {
     this.messages = this.messages.filter(m => m.id !== 'typing');
     this.pushMessages(newMsgs);
   }
-
+ 
   /* ───────── QUICK ACTIONS ───────── */
   handleAction(action: QuickAction) {
     this.selectedAction = action.id;
     if (action.id === 'end') return this.closeChat();
-
+ 
     this.messages = [];
     this.sendMessage('userclick', action.label);
     // this.showTyping('bot')
-
+ 
     if (action.id === 'status') {
       this.showTyping('bot')
       return this.loadStatusModule()
@@ -281,14 +281,14 @@ export class ChatModalComponent implements AfterViewChecked {
     };
     if (action.id === 'contact') return this.contactUs();
   }
-
+ 
   private loadStatusModule() {
     setTimeout(() => {
       this.hideTyping(this.createMessage('status', 'Please select a module:', 'bot', this.applicationModules));
       this.showmainmenu = false;
     }, 600);
   }
-
+ 
   private loadServiceModule() {
     setTimeout(() => {
       this.hideTyping([
@@ -303,7 +303,7 @@ export class ChatModalComponent implements AfterViewChecked {
       this.showmainmenu = false;
     }, 600);
   }
-
+ 
   private contactUs() {
     this.showmainmenu = false;
     this.messages = []
@@ -330,7 +330,7 @@ export class ChatModalComponent implements AfterViewChecked {
         text: `clrgwa@mp.nic.in`
       }
     ];
-
+ 
     setTimeout(() => {
       this.hideTyping([
         {
@@ -345,8 +345,8 @@ export class ChatModalComponent implements AfterViewChecked {
       this.showmainmenu = false;
     }, 600);
   }
-
-
+ 
+ 
   private loadDownloadsModule() {
     this.downloadModules = this.downloadService.getAlldownloads();
     setTimeout(() => {
@@ -354,7 +354,7 @@ export class ChatModalComponent implements AfterViewChecked {
       this.showmainmenu = false;
     }, 600);
   }
-
+ 
   private loadFaqModule() {
     this.faqModules = this.faqService.getAllFaqs();
     setTimeout(() => {
@@ -362,7 +362,7 @@ export class ChatModalComponent implements AfterViewChecked {
       this.showmainmenu = false;
     }, 600);
   }
-
+ 
   /* ───────── MESSAGE CREATOR ───────── */
   createMessage(selectedModule, text: string, sender: Sender, modules?: any[], buttons?: any[]): ChatMessage {
     return {
@@ -375,7 +375,7 @@ export class ChatModalComponent implements AfterViewChecked {
       buttons
     };
   }
-
+ 
   /* ───────── STATUS HANDLING ───────── */
   selectStatusModule(moduleName: any) {
     setTimeout(() => {
@@ -385,7 +385,7 @@ export class ChatModalComponent implements AfterViewChecked {
       this.awaitingApplicationNumber = true;
     }, 150);
   }
-
+ 
   showAnsforFaq(questions: any[], selectedQ: any) {
     console.log(questions)
     console.log('......')
@@ -397,26 +397,26 @@ export class ChatModalComponent implements AfterViewChecked {
         q.showanswer = false;
       }
     });
-
+ 
     this.cdr.detectChanges();
   }
-
+ 
   handleApplicationNumber(appId: string, selectedmodule: any) {
     this.showTyping('bot');
-
+ 
     this.statusService.getTicketStatus(appId, selectedmodule).subscribe({
       next: (res) => {
         this.hideTyping([]);
-
+ 
         if (!res?.data?.length) {
           this.addBotMessage(selectedmodule, 'No records found for this Application Number.');
           return;
         }
-
+ 
         const latest = [...res.data].sort(
           (a, b) => new Date(b.transaction_date).getTime() - new Date(a.transaction_date).getTime()
         )[0];
-
+ 
         const statusData = {
           title: this.lastSelectedModule,
           applicationNumber: appId,
@@ -426,7 +426,7 @@ export class ChatModalComponent implements AfterViewChecked {
           class: this.getStatusClass(latest.status),
           time: latest.transaction_date.split(' ')[1]
         };
-
+ 
         this.pushMessages({
           id: Date.now().toString(),
           sender: 'bot',
@@ -434,7 +434,7 @@ export class ChatModalComponent implements AfterViewChecked {
           timestamp: new Date(),
           statusData
         });
-
+ 
         this.pushMessages(this.createMessage(
           'status',
           'Are you satisfied?',
@@ -452,7 +452,7 @@ export class ChatModalComponent implements AfterViewChecked {
       }
     });
   }
-
+ 
   getStatusClass(status: string) {
     switch (status.toLowerCase()) {
       case 'closed': return 'status-closed';
@@ -460,11 +460,11 @@ export class ChatModalComponent implements AfterViewChecked {
       default: return 'status-live';
     }
   }
-
+ 
   addBotMessage(moduleAction, text: string) {
     this.pushMessages(this.createMessage(moduleAction, text, 'bot'));
   }
-
+ 
   /* ───────── FEEDBACK ───────── */
   onservicebuttonclick(moduleselected, ans: string) {
     this.pushMessages(this.createMessage(moduleselected, ans, 'user'));
@@ -477,7 +477,7 @@ export class ChatModalComponent implements AfterViewChecked {
       this.cdr.detectChanges();
     }, 900);
   }
-
+ 
   /* ───────── HEADER ───────── */
   onTranslateClick() { }
   onSettingsClick() { }
@@ -487,7 +487,7 @@ export class ChatModalComponent implements AfterViewChecked {
       this.onClearHistory();
     }
   }
-
+ 
   onClearHistory() {
     this.messages = [];
     this.showmainmenu = true;
@@ -495,14 +495,14 @@ export class ChatModalComponent implements AfterViewChecked {
     this.subModules = [];
     this.cdr.detectChanges();
   }
-
+ 
   onMinimizeClick() { this.drawer?.close(); }
   closeChat() { this.onClearHistory(); this.drawer?.close(); }
-
+ 
   openGIS(path: string) {
     window.open(`https://webgis2.mpbhulekh.gov.in/#/${path}`, '_blank');
   }
-
+ 
   onMessageClick(msg: ChatMessage) {
     if (!msg.clickable) return;
     msg.clickable = false;
@@ -510,11 +510,11 @@ export class ChatModalComponent implements AfterViewChecked {
     this.messages = [];
     this.showmainmenu = true;
   }
-
+ 
   onEmojiClick() {
     console.log('Emoji clicked');
   }
-
+ 
   moduleAction(message, module: any) {
     // SERVICES MODULE
     if (module.action) {
@@ -528,32 +528,32 @@ export class ChatModalComponent implements AfterViewChecked {
       console.log(this.fqaQuestions)
       this.sendMessage('userclick', module.name);
       this.showTyping('bot');
-
+ 
       const faqMsgs: ChatMessage[] = [
         { ...this.createMessage(message.selectedModule, 'Here are common questions:', 'bot'), questions: this.fqaQuestions }
       ];
-
+ 
       setTimeout(() => this.hideTyping(faqMsgs), 600);
       return;
     }
-
+ 
     // DOWNLOAD MODULE
     if (message.selectedModule === 'downloads') {
       this.downloadSubmodules = this.downloadService.getdownloadsSubmodules(module);
       this.sendMessage('userclick', module.name);
       this.showTyping('bot');
-
+ 
       const downloadMsgs: ChatMessage[] = [
         { ...this.createMessage(message.selectedModule, 'Please proceed further:', 'bot'), questions: this.downloadSubmodules }
       ];
-
+ 
       setTimeout(() => this.hideTyping(downloadMsgs), 600);
     }
-
+ 
     if (message.selectedModule === 'botConnection') {
       console.log(message)
       console.log(module)
-
+ 
       this.awaitingBotResponse = true
       this.showTyping('bot');
       setTimeout(() => {
@@ -567,67 +567,69 @@ export class ChatModalComponent implements AfterViewChecked {
           }
         });
       }, 800);
-
+ 
       // .......................
       // this.showTyping('bot');
       // setTimeout(() => {
       //   this.sendMessage('usersent', module.name);
       // }, 800);
     }
-
+ 
     // if (message.selectedModule === 'botConnection') {
     //   this.awaitingBotResponse = true;
-
+ 
     //   // 1️⃣ Show typing
     //   this.showTyping('bot');
-
+ 
     //   // 2️⃣ Force UI update (IMPORTANT for OnPush)
     //   this.cdr.detectChanges();
-
+ 
     //   // 3️⃣ After delay, REMOVE typing SAFELY and add bot message
     //   setTimeout(() => {
-
+ 
     //     // remove typing ONLY
     //     this.messages = this.messages.filter(m => m.id !== 'typing');
-
+ 
     //     // push bot message normally
     //     this.messages = [
     //       ...this.messages,
     //       this.createMessage('botConnection', module.name, 'bot')
     //     ];
-
+ 
     //     // force render
     //     this.cdr.detectChanges();
-
+ 
     //   }, 800);
     // }
-
+ 
   }
-
+ 
   makeGetStartedFalse() {
   }
-
+ 
   //  feedback modal
-
+ 
   showFeedbackModal = false;
   feedbackType: 'up' | 'down' | null = null;
   selectedMessage: any;
-
+ 
   onFeedback(type: 'up' | 'down', message: any) {
     this.feedbackType = type;
     this.selectedMessage = message;
     this.showFeedbackModal = true;
   }
-
+ 
   closeFeedbackModal() {
     this.showFeedbackModal = false;
     this.feedbackType = null;
     this.selectedMessage = null;
   }
-
+ 
   handleFeedbackSubmit(data: any) {
     this.closeFeedbackModal();
   }
-
+ 
 }
-
+ 
+ 
+ 

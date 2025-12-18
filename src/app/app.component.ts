@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterOutlet } from '@angular/router'; // ✅ ADD THIS
+import { RouterOutlet } from '@angular/router';
+import { NotificationComponent } from './shared-module/notification/notification.component';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,8 @@ import { RouterOutlet } from '@angular/router'; // ✅ ADD THIS
   imports: [
     CommonModule,
     FormsModule,
-    RouterOutlet
+    RouterOutlet,
+    NotificationComponent
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']

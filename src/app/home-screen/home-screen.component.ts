@@ -13,7 +13,7 @@ import { ChatModalComponent } from '../chat-modal/chat-modal.component';
 import { ApiService } from '../services/api.service';
 import { TokenService } from '../services/token.service';
 import { WelcomeScreenComponent } from '../welcome-screen/welcome-screen.component';
-
+ 
 @Component({
   selector: 'app-home-screen',
   standalone: true,
@@ -24,7 +24,7 @@ import { WelcomeScreenComponent } from '../welcome-screen/welcome-screen.compone
     MatTooltipModule,
     MatButtonModule,
     MatInputModule,
-
+ 
     MatSidenavModule,
     MatDialogModule,
     FormsModule,
@@ -36,9 +36,9 @@ import { WelcomeScreenComponent } from '../welcome-screen/welcome-screen.compone
   styleUrl: './home-screen.component.css'
 })
 export class HomeScreenComponent {
-
+ 
   @ViewChild('drawer') drawer!: MatSidenav;
-
+ 
   headerTitle = 'WebGIS 2.0 Portal - Bhulekhā';
   showfab = true;
   showTooltip = false;
@@ -46,7 +46,7 @@ export class HomeScreenComponent {
     public apiSrvc: ApiService,
     public tokenService: TokenService
   ) { }
-
+ 
   ngOnInit() {
     this.tokenService.clearToken()
     this.apiSrvc.loginGuest().subscribe({
@@ -57,15 +57,17 @@ export class HomeScreenComponent {
       }
     });
   }
-
+ 
   openChat() {
     this.drawer.open();
   }
-
+ 
   showWelcomeScreen = true;
   showChatModal(event) {
     this.showWelcomeScreen = !event
   }
-
+ 
 }
-
+ 
+ 
+ 

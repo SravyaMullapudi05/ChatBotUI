@@ -1,6 +1,5 @@
 <div class="feedback-overlay" *ngIf="visible">
-    <div class="feedback-modal">
-
+    <div class="feedback-modal" (click)="$event.stopPropagation()">
         <!-- Header -->
         <div class="feedback-header">
             <span>
@@ -30,13 +29,18 @@
                 Please tell us what could be improved in the response.
             </p>
 
+
             <!-- Tags -->
             <div class="tag-row">
-                <button *ngFor="let tag of feedbackTags" class="tag-btn" [class.selected]="selectedTags.includes(tag)"
-                    (click)="toggleTag(tag)">
+                <button *ngFor="let tag of feedbackTags" type="button" class="tag-btn"
+                    [class.selected]="selectedTags.includes(tag)" (click)="toggleTag(tag)">
                     {{ tag }}
                 </button>
             </div>
+
+            <!-- hidden ngModel binding (important) -->
+            <input type="hidden" [(ngModel)]="selectedTags" />
+
 
             <!-- Message -->
             <textarea [(ngModel)]="feedbackText" maxlength="100"
@@ -51,7 +55,7 @@
 
         <!-- Footer -->
         <div class="feedback-footer">
-            <button class="submit-btn" (click)="submitFeedback()">Submit</button>
+            <button class="submit-btn" (click)="submitFeedback()" [disabled]="!selectedRating">Submit</button>
             <button class="cancel-btn" (click)="closeModal()">Cancel</button>
         </div>
 

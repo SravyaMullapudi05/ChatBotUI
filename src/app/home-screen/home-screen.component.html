@@ -67,16 +67,16 @@
 
 
 <mat-sidenav-container [hasBackdrop]="true" class="chat-container" (backdropClick)="drawer.close()">
-
+ 
     <mat-sidenav-content></mat-sidenav-content>
-
+ 
     <mat-sidenav #drawer mode="over" position="end" class="chat-sidenav" [disableClose]="false"
         (opened)="showfab = false" (closed)="showfab = true">
         <app-welcome-screen *ngIf="showWelcomeScreen" [drawer]="drawer" class="welcome"
             (showChatModal)="showChatModal($event)"></app-welcome-screen>
         <app-chat-modal *ngIf="!showWelcomeScreen" [drawer]="drawer"  (closeChatEvent)="makeGetStartedFalse()"></app-chat-modal>
     </mat-sidenav>
-
+ 
 </mat-sidenav-container>
 <!-- <div class="tooltip_wra">
 <button mat-fab class="chat-fab btn-whatsapp-pulse btn-whatsapp-pulse-border" (click)="openChat()" matTooltip="This is a tooltip" matTooltipPosition="left">

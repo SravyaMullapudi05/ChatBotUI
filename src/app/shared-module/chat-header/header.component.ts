@@ -99,10 +99,22 @@ export class HeaderComponent {
 
   /* ✅ SINGLE SOURCE OF TRUTH */
   closeAllMenus() {
-    // this.langTrigger?.closeMenu();
-    // this.settingsTrigger?.closeMenu();
     this.settingsTrigger.closeMenu();
     this.langTrigger.closeMenu();
+  }
+
+  onLanguageMenuOpened(): void {
+    // Close settings if open
+    if (this.settingsTrigger?.menuOpen) {
+      this.settingsTrigger.closeMenu();
+    }
+  }
+
+  onSettingsMenuOpened(): void {
+    // Close language if open
+    if (this.langTrigger?.menuOpen) {
+      this.langTrigger.closeMenu();
+    }
   }
 
   /* HEADER ACTIONS */
@@ -121,28 +133,13 @@ export class HeaderComponent {
   }
 
   onMinimize() {
-    this.closeAllMenus();
-    this.minimizeClick.emit();
+    this.closeAllMenus();        // ✅ CLOSE LANGUAGE + SETTINGS
+    this.minimizeClick.emit();  // emit after closing
   }
 
   onClose() {
-    this.settingsTrigger.closeMenu();
-    this.langTrigger.closeMenu();
-    this.closeClick.emit();
-  }
-
-  onLanguageMenuOpened(): void {
-    // Close settings if open
-    if (this.settingsTrigger?.menuOpen) {
-      this.settingsTrigger.closeMenu();
-    }
-  }
-
-  onSettingsMenuOpened(): void {
-    // Close language if open
-    if (this.langTrigger?.menuOpen) {
-      this.langTrigger.closeMenu();
-    }
+    this.closeAllMenus();       // ✅ CLOSE LANGUAGE + SETTINGS
+    this.closeClick.emit();     // emit after closing
   }
 
 }

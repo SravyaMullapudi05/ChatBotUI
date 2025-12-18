@@ -37,7 +37,7 @@
     border-radius: 12px;
 }
 
-.mat-btn {
+.send-btn .mat-btn {
     transform: rotate(315deg);
     margin-bottom: 6px;
     margin-left: 6px;

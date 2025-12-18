@@ -36,7 +36,7 @@ import { CommonModule } from '@angular/common';
 export class ChatFooterComponent {
  
   newMessage: string = '';
- 
+ micClick=false;
   @Output() sendMessageEvent = new EventEmitter<{
     senttype: string;
     text: string;
@@ -45,12 +45,14 @@ export class ChatFooterComponent {
  
   sendMessage() {
     const msg = this.newMessage.trim();
+     this.newMessage = '';
     if (!msg) return;
-    this.newMessage = '';
+ 
     this.sendMessageEvent.emit({
       senttype: 'usersent',
       text: msg
     });
+   
   }
  
   onEmojiClick() {

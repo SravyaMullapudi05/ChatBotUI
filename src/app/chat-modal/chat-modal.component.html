@@ -64,7 +64,7 @@
           </div>
 
           <!-- CONTACT US CARD -->
-          <div *ngIf="message.contactData" class="contact-card">
+          <div *ngIf="message.contactData" class="service-box">
 
             <div *ngFor="let item of message.contactData" class="contact-row">
 
@@ -76,13 +76,13 @@
               <!-- Icon + Text -->
               <div *ngIf="item.text" class="contact-item">
                 <mat-icon *ngIf="item.icon">{{ item.icon }}</mat-icon>
-                <span class="contact-text">{{ item.text }}</span>
+                <p class="contact-text">{{ item.text }}</p>
               </div>
 
             </div>
 
           </div>
-
+          
           <!-- modules -->
           <div class="module-buttons w-100" *ngIf="message.modules">
             <button class="module-btn suggesstion d-flex justify-content-between" *ngFor="let m of message.modules"
@@ -185,21 +185,21 @@
 
 
           <!-- time -->
+        
           <!-- <div class="timestamp">{{ formatTimestamp(message.timestamp) }}</div> -->
-
+ 
           <!-- new -->
           <!-- time + feedback -->
           <div class="timestamp-row" *ngIf="message.sender === 'bot'">
             <span class="timestamp-text">
               {{ formatTimestamp(message.timestamp) }}
             </span>
-
+ 
             <span class="feedback-icons" *ngIf="message.showicons">
               <mat-icon (click)="onFeedback('up', message)">thumb_up</mat-icon>
               <mat-icon (click)="onFeedback('down', message)">thumb_down</mat-icon>
             </span>
           </div>
-
 
         </div>
 
@@ -253,10 +253,9 @@
   <!-- footer/input -->
   <app-chat-footer (sendMessageEvent)="sendMessage($event.senttype, $event.text)" (emojiClickEvent)="onEmojiClick()">
   </app-chat-footer>
+  
 
 </div>
-
-<!-- feedback modal -->
 <app-bot-message-feedback [visible]="showFeedbackModal" [type]="feedbackType" [message]="selectedMessage"
   (close)="closeFeedbackModal()" (submit)="handleFeedbackSubmit($event)">
 </app-bot-message-feedback>
