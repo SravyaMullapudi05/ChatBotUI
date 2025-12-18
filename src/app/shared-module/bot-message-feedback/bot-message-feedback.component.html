@@ -1,0 +1,59 @@
+<div class="feedback-overlay" *ngIf="visible">
+    <div class="feedback-modal">
+
+        <!-- Header -->
+        <div class="feedback-header">
+            <span>
+                {{ type === 'up' ? 'Positive feedback' : 'Negative feedback' }}
+            </span>
+            <button class="close-btn" (click)="closeModal()">✕</button>
+        </div>
+
+        <!-- Body -->
+        <div class="feedback-body">
+
+            <p class="question-text">
+                How would you rate this response?
+            </p>
+
+            <!-- Rating -->
+            <div class="rating-row">
+                <button *ngFor="let r of [1,2,3,4,5,6,7,8,9,10]" class="rating-btn"
+                    [class.active]="selectedRating === r" [class.disabled]="isRatingDisabled(r)"
+                    (click)="selectRating(r)">
+                    {{ r }}
+                </button>
+            </div>
+
+
+            <p class="improve-text">
+                Please tell us what could be improved in the response.
+            </p>
+
+            <!-- Tags -->
+            <div class="tag-row">
+                <button *ngFor="let tag of feedbackTags" class="tag-btn" [class.selected]="selectedTags.includes(tag)"
+                    (click)="toggleTag(tag)">
+                    {{ tag }}
+                </button>
+            </div>
+
+            <!-- Message -->
+            <textarea [(ngModel)]="feedbackText" maxlength="100"
+                placeholder="E.g., The response lacked clarity or missed key details.">
+        </textarea>
+
+            <div class="char-count">
+                {{ feedbackText.length }} / 100
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="feedback-footer">
+            <button class="submit-btn" (click)="submitFeedback()">Submit</button>
+            <button class="cancel-btn" (click)="closeModal()">Cancel</button>
+        </div>
+
+    </div>
+</div>

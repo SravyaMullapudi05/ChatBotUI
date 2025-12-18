@@ -46,12 +46,11 @@ export class ChatFooterComponent {
   sendMessage() {
     const msg = this.newMessage.trim();
     if (!msg) return;
- 
+    this.newMessage = '';
     this.sendMessageEvent.emit({
       senttype: 'usersent',
       text: msg
     });
-    this.newMessage = '';
   }
  
   onEmojiClick() {

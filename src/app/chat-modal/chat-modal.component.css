@@ -26,7 +26,8 @@
 
 
 app-header {
-    flex-shrink: 0; /* <- added extra */
+    flex-shrink: 0;
+    /* <- added extra */
     position: sticky;
     top: 0;
     left: 0;
@@ -131,7 +132,7 @@ app-chat-footer {
     border: 1px solid var(--surfacecontainerhighest);
     padding: 14px;
     /* overflow: auto; */
-        overflow: visible;
+    overflow: visible;
     /* background: #F1F6FF;
     padding: 14px 18px;
     border-radius: 14px;
@@ -762,4 +763,40 @@ app-chat-footer {
 .contact-item mat-icon {
     font-size: 18px;
     color: #1a4fff;
+}
+
+/* feedback-buttons */
+/* timestamp + feedback row */
+.timestamp-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 4px;
+    font-size: 11px;
+    color: #8f8f8f;
+}
+
+/* left side time */
+.timestamp-text {
+    white-space: nowrap;
+}
+
+/* right side icons */
+.feedback-icons {
+    display: flex;
+    /* gap: 6px; */
+    margin-inline-end: auto;
+    margin-inline-start: 10px;
+}
+
+.feedback-icons mat-icon {
+    font-size: 16px;
+    cursor: pointer;
+    color: #9aa4b2;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.feedback-icons mat-icon:hover {
+    color: #1a4fff;
+    transform: scale(1.1);
 }

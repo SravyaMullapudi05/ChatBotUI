@@ -95,14 +95,14 @@ export class HeaderComponent {
     this.settingsSelected.emit(item);
     this.settingsTrigger?.closeMenu();
   }
-  
+
 
   /* ✅ SINGLE SOURCE OF TRUTH */
   closeAllMenus() {
     // this.langTrigger?.closeMenu();
     // this.settingsTrigger?.closeMenu();
-    this.onLanguageMenuOpened();
-    this.onSettingsMenuOpened;
+    this.settingsTrigger.closeMenu();
+    this.langTrigger.closeMenu();
   }
 
   /* HEADER ACTIONS */
@@ -121,13 +121,14 @@ export class HeaderComponent {
   }
 
   onMinimize() {
-    this.closeAllMenus();      
-    this.minimizeClick.emit(); 
+    this.closeAllMenus();
+    this.minimizeClick.emit();
   }
 
   onClose() {
-    this.closeAllMenus();     
-    this.closeClick.emit();    
+    this.settingsTrigger.closeMenu();
+    this.langTrigger.closeMenu();
+    this.closeClick.emit();
   }
 
   onLanguageMenuOpened(): void {

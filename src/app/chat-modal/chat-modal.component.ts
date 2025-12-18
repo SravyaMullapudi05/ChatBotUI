@@ -29,6 +29,7 @@ import { ChatFooterComponent } from '../shared-module/chat-footer/chat-footer.co
 import { HeaderComponent } from '../shared-module/chat-header/header.component';
 import { ConnecttobotService } from '../services/connecttobot.service';
 import { Router } from '@angular/router';
+import { BotMessageFeedbackComponent } from '../shared-module/bot-message-feedback/bot-message-feedback.component';
 
 type Sender = 'bot' | 'user';
 
@@ -85,7 +86,8 @@ export interface BotSuggestion {
     MatMenuModule,
     WelcomeScreenComponent,
     ChatFooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    BotMessageFeedbackComponent
   ]
 })
 export class ChatModalComponent implements AfterViewChecked {
@@ -209,9 +211,10 @@ export class ChatModalComponent implements AfterViewChecked {
           this.botResponse = res.data
           if (this.botResponse && this.botResponse.length > 1) {
             qshn = 'Do you mean to say?'
+            // this.hideTyping(this.createMessage('botConnection', qshn, 'bot', this.botResponse));
             this.hideTyping([
               {
-                ...this.createMessage('contact', 'Contact Us', 'bot'),
+                ...this.createMessage('botConnection', qshn, 'bot', this.botResponse),
                 showicons: true
               },
               this.createMessage('contact', 'Are you satisfied?', 'bot', undefined, [
@@ -222,7 +225,9 @@ export class ChatModalComponent implements AfterViewChecked {
 
           } else {
             qshn = this.botResponse[0].name
-            this.hideTyping(this.createMessage('botConnection', qshn, 'bot'));
+            this.hideTyping({
+              ...this.createMessage('botConnection', qshn, 'bot'), showicons: true
+            });
           }
         },
         error: () => {
@@ -550,21 +555,78 @@ export class ChatModalComponent implements AfterViewChecked {
       console.log(module)
 
       this.awaitingBotResponse = true
-      // this.ConnectToBotservice.connectToBot(text).subscribe({
-      //   next: (res) => {
-      //     this.botResponse = res.data ? res.data : res
-      //     this.hideTyping(this.createMessage('botConnection', 'Do you mean to say?', 'bot', this.botResponse));
-      //   },
-      //   error: () => {
-      //     this.hideTyping([]);
-      //   }
-      // });
       this.showTyping('bot');
-      setTimeout(() => this.sendMessage('usersent', module.name), 600)
+      setTimeout(() => {
+        this.ConnectToBotservice.connectToBot(message).subscribe({
+          next: (res) => {
+            this.botResponse = res.data ? res.data : res
+            this.hideTyping(this.createMessage('botConnection', 'Do you mean to say?', 'bot', this.botResponse));
+          },
+          error: () => {
+            this.hideTyping([]);
+          }
+        });
+      }, 800);
+
+      // .......................
+      // this.showTyping('bot');
+      // setTimeout(() => {
+      //   this.sendMessage('usersent', module.name);
+      // }, 800);
     }
+
+    // if (message.selectedModule === 'botConnection') {
+    //   this.awaitingBotResponse = true;
+
+    //   // 1️⃣ Show typing
+    //   this.showTyping('bot');
+
+    //   // 2️⃣ Force UI update (IMPORTANT for OnPush)
+    //   this.cdr.detectChanges();
+
+    //   // 3️⃣ After delay, REMOVE typing SAFELY and add bot message
+    //   setTimeout(() => {
+
+    //     // remove typing ONLY
+    //     this.messages = this.messages.filter(m => m.id !== 'typing');
+
+    //     // push bot message normally
+    //     this.messages = [
+    //       ...this.messages,
+    //       this.createMessage('botConnection', module.name, 'bot')
+    //     ];
+
+    //     // force render
+    //     this.cdr.detectChanges();
+
+    //   }, 800);
+    // }
+
   }
 
   makeGetStartedFalse() {
+  }
+
+  //  feedback modal
+
+  showFeedbackModal = false;
+  feedbackType: 'up' | 'down' | null = null;
+  selectedMessage: any;
+
+  onFeedback(type: 'up' | 'down', message: any) {
+    this.feedbackType = type;
+    this.selectedMessage = message;
+    this.showFeedbackModal = true;
+  }
+
+  closeFeedbackModal() {
+    this.showFeedbackModal = false;
+    this.feedbackType = null;
+    this.selectedMessage = null;
+  }
+
+  handleFeedbackSubmit(data: any) {
+    this.closeFeedbackModal();
   }
 
 }

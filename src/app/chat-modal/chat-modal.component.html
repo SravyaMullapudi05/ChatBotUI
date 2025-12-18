@@ -194,7 +194,7 @@
               {{ formatTimestamp(message.timestamp) }}
             </span>
 
-            <span class="feedback-icons" *ngIf="showicons">
+            <span class="feedback-icons" *ngIf="message.showicons">
               <mat-icon (click)="onFeedback('up', message)">thumb_up</mat-icon>
               <mat-icon (click)="onFeedback('down', message)">thumb_down</mat-icon>
             </span>
@@ -255,3 +255,8 @@
   </app-chat-footer>
 
 </div>
+
+<!-- feedback modal -->
+<app-bot-message-feedback [visible]="showFeedbackModal" [type]="feedbackType" [message]="selectedMessage"
+  (close)="closeFeedbackModal()" (submit)="handleFeedbackSubmit($event)">
+</app-bot-message-feedback>
