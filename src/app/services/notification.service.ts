@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 
 export interface Notification {
   message: string;
-  type?: 'success' | 'error' | 'info';
+  type?: 'success' | 'error' | 'info' | 'warning';
 }
 
 @Injectable({ providedIn: 'root' })
@@ -12,7 +12,7 @@ export class NotificationService {
   private notificationSubject = new BehaviorSubject<Notification | null>(null);
   notification$ = this.notificationSubject.asObservable();
 
-  show(message: string, type: 'success' | 'error' | 'info' = 'success') {
+  show(message: string, type: 'success' | 'error' | 'info' | 'warning' = 'success') {
     this.notificationSubject.next({ message, type });
 
     setTimeout(() => {

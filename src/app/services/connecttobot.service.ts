@@ -72,7 +72,7 @@ export class ConnecttobotService {
     );
 
     var data = {
-      data: match ? match.items : [{ id: 1, name: 'Try again later'}]
+      data: match ? match.items : [{ id: 1, name: "I'm sorry, I didn't quite catch that.Could you please rephrase or clarify your request?" }]
     }
 
     return of(data);

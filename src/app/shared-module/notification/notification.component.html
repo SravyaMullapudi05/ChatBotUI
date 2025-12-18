@@ -1,1 +1,18 @@
-<p>notification works!</p>
+<div class="notification"
+     *ngIf="notification$ | async as n"
+     [class.success]="n.type === 'success'"
+     [class.error]="n.type === 'error'"
+     [class.info]="n.type === 'info'"
+     [class.warning]="n.type === 'warning'">
+
+  <mat-icon class="icon">
+    {{
+      n.type === 'success' ? 'check_circle' :
+      n.type === 'error'   ? 'error' :
+      n.type === 'warning' ? 'warning' :
+                             'info'
+    }}
+  </mat-icon>
+
+  <span class="text">{{ n.message }}</span>
+</div>
