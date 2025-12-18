@@ -26,6 +26,14 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { ChatFooterComponent } from '../chat-footer/chat-footer.component';
 import { UserBotMessagesComponent } from '../user-bot-messages/user-bot-messages.component';
+import { ApiService } from 'src/app/services/api.service';
+
+
+interface Language {
+  code: string;
+  label: string;
+  flag: string;
+}
 
 @Component({
   selector: 'app-header',
@@ -56,17 +64,27 @@ import { UserBotMessagesComponent } from '../user-bot-messages/user-bot-messages
 })
 export class HeaderComponent {
 
-  /* ✅ MENU TRIGGERS (IMPORTANT) */
+  constructor(private apiService: ApiService) { }
+
+  /*  MENU TRIGGERS*/
   @ViewChild('langTrigger') langTrigger!: MatMenuTrigger;
   @ViewChild('settingsTrigger') settingsTrigger!: MatMenuTrigger;
 
   /* Languages */
-  languages = [
-    { id: 1, code: 'en', label: 'English', flag: '../assets/images/GB.png' },
-    { id: 2, code: 'hi', label: 'हिंदी', flag: '../assets/images/IN.png' }
+  languages: Language[] = [
+    {
+      code: 'en',
+      label: 'English',
+      flag: '../assets/images/GB.png'
+    },
+    {
+      code: 'hi',
+      label: 'हिंदी',
+      flag: '../assets/images/IN.png'
+    }
   ];
 
-  selectedLanguage = this.languages[0];
+  selectedLanguage: any;
 
   /* Settings */
   settingsOptions = [
@@ -82,11 +100,22 @@ export class HeaderComponent {
   @Output() languageSelected = new EventEmitter<any>();
   @Output() settingsSelected = new EventEmitter<any>();
 
+  ngOnInit(): void {
+    const savedLangCode = this.apiService.getLanguage(); // 'en' | 'hi' | null
+
+    const lang =
+      this.languages.find(l => l.code === savedLangCode) ??
+      this.languages[0];
+
+    this.selectLanguage(lang);
+  }
+
   /* LANGUAGE */
-  selectLanguage(lang: any) {
+  selectLanguage(lang: Language): void {
     this.selectedLanguage = lang;
+    this.apiService.setLanguage(lang.code);
     this.languageSelected.emit(lang);
-    this.langTrigger?.closeMenu();   // ✅ close overlay
+    this.langTrigger?.closeMenu();
   }
 
   /* SETTINGS */
@@ -97,7 +126,6 @@ export class HeaderComponent {
   }
 
 
-  /* ✅ SINGLE SOURCE OF TRUTH */
   closeAllMenus() {
     this.settingsTrigger.closeMenu();
     this.langTrigger.closeMenu();
@@ -133,13 +161,13 @@ export class HeaderComponent {
   }
 
   onMinimize() {
-    this.closeAllMenus();        // ✅ CLOSE LANGUAGE + SETTINGS
-    this.minimizeClick.emit();  // emit after closing
+    this.closeAllMenus();
+    this.minimizeClick.emit();
   }
 
   onClose() {
-    this.closeAllMenus();       // ✅ CLOSE LANGUAGE + SETTINGS
-    this.closeClick.emit();     // emit after closing
+    this.closeAllMenus()
+    this.closeClick.emit();   
   }
 
 }

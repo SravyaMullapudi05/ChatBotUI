@@ -4,20 +4,35 @@
     <div class="input-wrapper">
       <textarea class="message-input" placeholder="Type your message here..." [(ngModel)]="newMessage" rows="1"
         (input)="autoResizeTextArea($event)" (keydown.enter)="onEnterPress($event)">
-        </textarea>
-
-      <!-- <button mat-icon-button class="emoji-btn mt-4" (click)="onEmojiClick()">
-          <mat-icon>mood</mat-icon>
-        </button> -->
+      </textarea>
     </div>
-    <button mat-icon-button [ngClass]="{'secondary_btn': newMessage}" class="mt-4 w-auto p-1" (click)="micClick=true">
-      <mat-icon class="mat-btn">mic</mat-icon></button>
-    <button mat-icon-button
-      [ngClass]="{  'send-btn mt-4 primary_btn w-auto': newMessage,  'send-btn mt-4 secondary_btn w-auto ': !newMessage}"
-      (click)="sendMessage()">
-      <mat-icon class="mat-btn">send</mat-icon>
+
+    <!-- MIC -->
+    <button mat-icon-button class="mt-4 w-auto p-1 mic-btn" (click)="toggleMic()" [class.listening]="isListening"
+      [disabled]="!isSpeechSupported"
+      [matTooltip]="!isSpeechSupported ? 'Voice not supported' : (isListening ? 'Listening...' : 'Speak')">
+      <mat-icon class="mat-btn">
+        {{ isListening ? 'mic' : 'mic_off' }}
+      </mat-icon>
     </button>
 
+    <!-- SEND -->
+    <button mat-icon-button [ngClass]="{
+        'send-btn mt-4 primary_btn w-auto': newMessage,
+        'send-btn mt-4 secondary_btn w-auto': !newMessage
+      }" (click)="sendMessage()">
+      <mat-icon class="mat-btn">send</mat-icon>
+    </button>
+  </div>
+
+  <!-- LISTENING -->
+  <div class="listening-text" *ngIf="isListening">
+    Listening<span>.</span><span>.</span><span>.</span>
+  </div>
+
+  <!-- MIC PERMISSION -->
+  <div class="mic-warning" *ngIf="micPermissionDenied">
+    Please enable microphone access to use voice input
   </div>
 
   <div class="help-text mt-2">Type /help for assistance</div>

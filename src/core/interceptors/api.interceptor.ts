@@ -29,7 +29,7 @@ export class ApiInterceptor implements HttpInterceptor {
       .set('QPF-uuid', environment.qpfUuid)
       .set('Accept', 'application/json, text/plain, */*')
       .set('Content-Type', 'application/json');
-    // ✅ Add Authorization ONLY when needed
+    //  Add Authorization ONLY when needed
     if (token && !isGuestLogin) {
       headers = headers.set('Authorization', `Bearer ${token}`);
     }

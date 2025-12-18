@@ -176,7 +176,7 @@
     border-color: #1a4fff;
 }
 
-/* ✅ SELECTED STATE */
+/*  SELECTED STATE */
 .tag-btn.selected {
     background: #e7f0ff;
     border-color: #1a4fff;
@@ -278,7 +278,7 @@ textarea:focus {
     }
 }
 
-/* 🔥 Fix snackbar being hidden behind chat/modal */
+/*  Fix snackbar being hidden behind chat/modal */
 .cdk-overlay-container {
     z-index: 20000 !important;
 }

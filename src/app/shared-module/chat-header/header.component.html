@@ -46,12 +46,12 @@
  
     <mat-menu #settingsMenu="matMenu" class="settings-menu-panel">
  
-      <!-- ✅ NON CLICKABLE TITLE -->
+      <!--  NON CLICKABLE TITLE -->
       <!-- <button mat-menu-item disabled class="settings-title ">
         Chat Settings
       </button> -->
  
-      <!-- ✅ REAL ACTIONS -->
+      <!--  REAL ACTIONS -->
       <button mat-menu-item *ngFor="let opt of settingsOptions" (click)="selectSetting(opt)">
         <p class="chat_ft"> <mat-icon>volume_up</mat-icon>{{ opt.label }}</p>
         <!-- <mat-icon>history</mat-icon> -->

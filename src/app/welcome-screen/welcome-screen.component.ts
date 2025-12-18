@@ -1,6 +1,6 @@
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
- 
+
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,9 +10,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
- 
+
 import { ChatModalComponent } from '../chat-modal/chat-modal.component';
- 
+import { ApiService } from '../services/api.service';
+
 @Component({
   selector: 'app-welcome-screen',
   templateUrl: './welcome-screen.component.html',
@@ -32,18 +33,21 @@ import { ChatModalComponent } from '../chat-modal/chat-modal.component';
     MatMenuModule],
 })
 export class WelcomeScreenComponent {
- 
+
   @Input() drawer: MatSidenav | any;
   @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
   @Output() showChatModal = new EventEmitter<boolean>();
- 
+
   selectedLanguage: string;
- 
-  // 🔥 This tells the parent to switch to chat component
- 
-  constructor() { }
-  ngOnInit(){
-    this.selectLanguage(this.languages[0].code)
+
+  constructor(private apiService: ApiService) { }
+  ngOnInit() {
+    const savedLang = this.apiService.getLanguage();
+    if (savedLang) {
+      this.selectLanguage(savedLang)
+    } else {
+      this.selectLanguage(this.languages[0].code)
+    }
   }
   getstarted = false
   welcomeActions = [
@@ -68,7 +72,7 @@ export class WelcomeScreenComponent {
       icon: 'task_alt'
     }
   ];
- 
+
   languages = [
     {
       code: 'en',
@@ -81,22 +85,21 @@ export class WelcomeScreenComponent {
       flag: '../assets/images/IN.png'
     }
   ];
- 
+
   getStarted() {
     this.getstarted = true
     this.showChatModal.emit(true)
   }
- 
+
   // makeGetStartedFalse() {
   //   this.getstarted = false
   // }
- 
- 
+
+
   selectLanguage(code: string) {
     this.selectedLanguage = code
-    console.log(this.selectedLanguage)
+    this.apiService.setLanguage(code);
   }
- 
+
 }
- 
- 
+

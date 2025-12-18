@@ -54,7 +54,7 @@ export class BotMessageFeedbackComponent {
     }
     this.feedBackService.submitFeedBack(feedBackdata)
 
-    // // ✅ THANK YOU NOTIFICATION
+    // //  THANK YOU NOTIFICATION
     // this.snackBar.open(
     //   'Thank you for your feedback!',
     //   'Close',
